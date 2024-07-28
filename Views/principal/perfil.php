@@ -47,23 +47,11 @@
                                         <hr>
                                         <p><?php echo $_SESSION['nombreCliente']; ?></p>
                                         <p><i class="fas fa-envelope"></i> <?php echo $_SESSION['correoCliente']; ?></p>
-                                        <div class="accordion" id="accordionExample">
-                                            <div class="card">
-                                                <div class="card-header" id="headingOne">
-                                                    <h2 class="mb-0">
-                                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                            Paypal
-                                                        </button>
-                                                    </h2>
-                                                </div>
 
-                                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                    <div class="card-body">
-                                                        <div id="paypal-button-container"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button class="btn btn-success" id="btnFinalizarPago">
+                                            <i class="fab fa-whatsapp"></i> Completa tu pedido acá
+                                        </button>
+                                    
                                         <a class="btn btn-danger" href="<?php echo BASE_URL . 'clientes/salir'; ?>"><i class="fas fa-times-circle"></i> Cerrar Sesión</a>
                                     </div>
                                 </div>

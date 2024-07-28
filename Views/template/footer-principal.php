@@ -11,10 +11,7 @@
     <hr class="social_divider">
 
     <div class="footer_content d-flex align-items-center justify-content-start">
-    <!-- Logo -->
-      <div class="footer_logo">
-        <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo" width="70">
-      </div>
+    
       <p class="copyright_text mb-0 ml-3">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS<a href="#"></a></p>
     </div>
   </div>

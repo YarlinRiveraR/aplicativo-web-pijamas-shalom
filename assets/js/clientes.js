@@ -1,5 +1,6 @@
 const tableLista = document.querySelector("#tableListaProductos tbody");
 const tblPendientes = document.querySelector('#tblPendientes');
+const btnFinalizarPago = document.querySelector("#btnFinalizarPago");
 let productosjson = [];
 const estadoEnviado = document.querySelector('#estadoEnviado');
 const estadoProceso = document.querySelector('#estadoProceso');
@@ -26,6 +27,49 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 });
+
+function generarMensajeCarrito() {
+    const listaCarrito = JSON.parse(localStorage.getItem('listaCarrito')) || [];
+    if (listaCarrito.length === 0) {
+        return "El carrito está vacío.";
+    }
+
+    const url = base_url + 'principal/listaProductos';
+    const http = new XMLHttpRequest();
+    http.open('POST', url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.send(JSON.stringify(listaCarrito));
+
+    http.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            const res = JSON.parse(this.responseText);
+            let mensaje = "Hola! 👋\n\n";
+            mensaje += "Quiero confirmar mi pedido:\n\n";
+
+            for (let i = 0; i < res.productos.length; i++) {
+                const producto = res.productos[i];
+                mensaje += `${i + 1}. ${producto.nombre}\n`;
+                mensaje += `Cantidad: ${producto.cantidad}\n`;
+                mensaje += `Talla: ${listaCarrito[i].talla}\n`;
+                mensaje += `Precio: ${producto.precio} ${res.moneda}\n\n`;
+            }
+            mensaje += `Total a pagar: ${res.total} ${res.moneda}\n\n`;
+            mensaje += "¿Cuál es el siguiente paso? Por favor, indicame qué métodos de pago aceptan. ¡Gracias! 😊";
+            
+            // Reemplazar saltos de línea con %0A para WhatsApp
+            mensaje = mensaje.replace(/\n/g, '%0A');
+
+            let telefono = "+573004413069"; // Reemplaza esto con el número de teléfono destino
+            let urlWhatsApp = `https://api.whatsapp.com/send?phone=${telefono}&text=${mensaje}`;
+            window.open(urlWhatsApp, '_blank');
+        }
+    }
+}
+
+btnFinalizarPago.addEventListener('click', function() {
+    generarMensajeCarrito();
+});
+
 
 function getListaProductos() {
     const miTalla = JSON.parse(localStorage.getItem('listaCarrito'));

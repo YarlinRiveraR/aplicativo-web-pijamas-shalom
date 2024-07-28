@@ -80,9 +80,7 @@
               </div>
             </div>
             <div class="col-auto">
-              <div class="footer_logo">
-                <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo">
-              </div>
+              
             </div>
           </div>
         </div>

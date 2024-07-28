@@ -11,10 +11,10 @@ class CategoriasModel extends Query{
         return $this->selectAll($sql);
     }
 
-    public function registrar($categoria)
+    public function registrar($categoria, $descripcion)
     {
-        $sql = "INSERT INTO categorias (categoria) VALUES (?)";
-        $array = array($categoria);
+        $sql = "INSERT INTO categorias (categoria, descripcion) VALUES (?,?)";
+        $array = array($categoria, $descripcion);
         return $this->insertar($sql, $array);
     }
     public function verificarCategoria($categoria)
@@ -36,10 +36,10 @@ class CategoriasModel extends Query{
         return $this->select($sql);
     }
 
-    public function modificar($categoria, $id)
+    public function modificar($categoria, $id, $descripcion)
     {
-        $sql = "UPDATE categorias SET categoria=? WHERE id = ?";
-        $array = array($categoria, $id);
+        $sql = "UPDATE categorias SET categoria=?, descripcion=? WHERE id = ?";
+        $array = array($categoria, $id, $descripcion);
         return $this->save($sql, $array);
     }
 }
