@@ -18,33 +18,33 @@ let language = {
         "sortAscending": ": Activar para ordenar la columna de manera ascendente",
         "sortDescending": ": Activar para ordenar la columna de manera descendente"
     },
-    "buttons": {
-        "copy": "Copiar",
-        "colvis": "Visibilidad",
-        "collection": "Colección",
-        "colvisRestore": "Restaurar visibilidad",
-        "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
-        "copySuccess": {
-            "1": "Copiada 1 fila al portapapeles",
-            "_": "Copiadas %ds fila al portapapeles"
-        },
-        "copyTitle": "Copiar al portapapeles",
-        "csv": "CSV",
-        "excel": "Excel",
-        "pageLength": {
-            "-1": "Mostrar todas las filas",
-            "_": "Mostrar %d filas"
-        },
-        "pdf": "PDF",
-        "print": "Imprimir",
-        "renameState": "Cambiar nombre",
-        "updateState": "Actualizar",
-        "createState": "Crear Estado",
-        "removeAllStates": "Remover Estados",
-        "removeState": "Remover",
-        "savedStates": "Estados Guardados",
-        "stateRestore": "Estado %d"
-    },
+    // "buttons": {
+    //     "copy": "Copiar",
+    //     "colvis": "Visibilidad",
+    //     "collection": "Colección",
+    //     "colvisRestore": "Restaurar visibilidad",
+    //     "copyKeys": "Presione ctrl o u2318 + C para copiar los datos de la tabla al portapapeles del sistema. <br \/> <br \/> Para cancelar, haga clic en este mensaje o presione escape.",
+    //     "copySuccess": {
+    //         "1": "Copiada 1 fila al portapapeles",
+    //         "_": "Copiadas %ds fila al portapapeles"
+    //     },
+    //     "copyTitle": "Copiar al portapapeles",
+    //     "csv": "CSV",
+    //     "excel": "Excel",
+    //     "pageLength": {
+    //         "-1": "Mostrar todas las filas",
+    //         "_": "Mostrar %d filas"
+    //     },
+    //     "pdf": "PDF",
+    //     "print": "Imprimir",
+    //     "renameState": "Cambiar nombre",
+    //     "updateState": "Actualizar",
+    //     "createState": "Crear Estado",
+    //     "removeAllStates": "Remover Estados",
+    //     "removeState": "Remover",
+    //     "savedStates": "Estados Guardados",
+    //     "stateRestore": "Estado %d"
+    // },
     "autoFill": {
         "cancel": "Cancelar",
         "fill": "Rellene todas las celdas con <i>%d<\/i>",
@@ -241,43 +241,43 @@ let language = {
     }
 }
 let buttons = [{
-        //Botón para Excel
-        extend: 'excelHtml5',
-        footer: true,
-        //Aquí es donde generas el botón personalizado
-        text: '<span class="badge bg-success"><i class="fas fa-file-excel"></i></span>'
+        // //Botón para Excel
+        // extend: 'excelHtml5',
+        // footer: true,
+        // //Aquí es donde generas el botón personalizado
+        // text: '<span class="badge bg-success"><i class="fas fa-file-excel"></i></span>'
     },
     //Botón para PDF
     {
-        extend: 'pdfHtml5',
-        download: 'open',
-        footer: true,
-        text: '<span class="badge bg-danger"><i class="fas fa-file-pdf"></i></span>',
-        exportOptions: {
-            columns: [0, ':visible']
-        }
+        // extend: 'pdfHtml5',
+        // download: 'open',
+        // footer: true,
+        // text: '<span class="badge bg-danger"><i class="fas fa-file-pdf"></i></span>',
+        // exportOptions: {
+        //     columns: [0, ':visible']
+        // }
     },
     //Botón para copiar
     {
-        extend: 'copyHtml5',
-        footer: true,
-        text: '<span class="badge bg-primary"><i class="fas fa-copy"></i></span>',
-        exportOptions: {
-            columns: [0, ':visible']
-        }
+        // extend: 'copyHtml5',
+        // footer: true,
+        // text: '<span class="badge bg-primary"><i class="fas fa-copy"></i></span>',
+        // exportOptions: {
+        //     columns: [0, ':visible']
+        // }
     },
     //Botón para print
     {
-        extend: 'print',
-        footer: true,
-        text: '<span class="badge bg-dark"><i class="fas fa-print"></i></span>'
+        // extend: 'print',
+        // footer: true,
+        // text: '<span class="badge bg-dark"><i class="fas fa-print"></i></span>'
     },
     //Botón para cvs
     {
-        extend: 'csvHtml5',
-        footer: true,
-        filename: 'Export_File_csv',
-        text: '<span class="badge bg-success"><i class="fas fa-file-csv"></i></span>'
+        // extend: 'csvHtml5',
+        // footer: true,
+        // filename: 'Export_File_csv',
+        // text: '<span class="badge bg-success"><i class="fas fa-file-csv"></i></span>'
     }
 ];
 let dom = "<'row'<'col-sm-4'l><'col-sm-4 text-center'B><'col-sm-4'f>>" +

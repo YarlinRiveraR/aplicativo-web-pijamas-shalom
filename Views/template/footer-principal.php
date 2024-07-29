@@ -1,32 +1,63 @@
 <!-- copyright section start -->
-<div class="copyright_section">
+<div class="footer_section">
   <div class="container">
-    <!-- Social Media Icons -->
-    <div class="social_media_icons text-center mb-3">
-      <p>REDES SOCIALES</p>
-      <a href="https://www.instagram.com" target="_blank" class="social_icon"><i class="fab fa-instagram"></i></a>
+    <div class="row">
+      <!-- Contact and Location -->
+      <div class="col-md-4">
+        <h5>Shalom Pijamas</h5>
+        <p><i class="fas fa-map-marker-alt"></i> Calle 4N #7E-30 Los Pinos</p>
+        <p><i class="fas fa-phone"></i> +57 300 4413069</p>
+        <p><i class="fas fa-envelope"></i> Jperez540@misena.edu.co</p>
+      </div>
+
+      <!-- Enlaces de Colecciones -->
+      <div class="col-md-4 text-center">
+        <h5>Colecciones</h5>
+        <p><a href="<?php echo BASE_URL; ?>" class="footer_link">INICIO</a></p>
+        <?php foreach ($data['categorias'] as $categoria) { ?>
+          <p><a href="#categoria_<?php echo $categoria['id']; ?>" class="footer_link"><?php echo $categoria['categoria']; ?></a></p>
+        <?php } ?>
+      </div>
+
+      <!-- Íconos de Redes sociales -->
+      <div class="col-md-4 text-center">
+        <h5>Redes Sociales</h5>
+        <a href="https://www.instagram.com/pijamas__shalom?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social_icon"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.facebook.com/reel/6137300836308507?sfnsn=scwspwa&mibextid=5xHrnq" target="_blank" class="social_icon"><i class="fab fa-facebook"></i></a>
+      </div>
     </div>
 
     <!-- Divisoria -->
     <hr class="social_divider">
 
-    <div class="footer_content d-flex align-items-center justify-content-start">
-    
-      <p class="copyright_text mb-0 ml-3">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS<a href="#"></a></p>
+    <div class="footer_content text-center">
+      <p class="copyright_text mb-0">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS</p>
     </div>
   </div>
 </div>
 <!-- copyright section end -->
 
-<!-- CSS for social media icons and logo -->
+<!-- CSS for footer -->
 <style>
-  .copyright_section {
+  .footer_section {
     padding: 20px 0;
+    background-color: #333;
+    color: #ddd;
+  }
+
+  .footer_section h5 {
+    color: #fff;
+    margin-bottom: 15px;
+  }
+
+  .footer_section p {
+    margin: 5px 0;
   }
 
   .social_icon {
     color: #ddd;
-    font-size: 50px;
+    font-size: 30px;
+    margin: 0 10px;
   }
 
   .social_icon:hover {
@@ -34,19 +65,27 @@
   }
 
   .social_divider {
-    margin: 15px 0; 
+    margin: 20px 0;
     border-top: 1px solid #ddd;
   }
 
-  .footer_content {
-    display: flex;
+  .footer_link {
+    color: #ddd;
+    text-decoration: none;
+    display: block;
+    margin: 5px 0;
   }
 
-  .footer_logo img {
-    width: 200px;
-    height: auto;
-  }  
+  .footer_link:hover {
+    color: #007bff;
+  }
+
+  .footer_content {
+    margin-top: 20px;
+  }
 </style>
+
+
 
 
 
@@ -90,29 +129,31 @@
   </div>
 </div>
 
- <!-- Botón de WhatsApp -->
- <div id="whatsapp-button">
-      <a href="https://wa.me/+573004413069?text=¡Chatea Conmigo!" target="_blank">
-          <img src="<?php echo BASE_URL . 'assets/images/whatsapp.jpg'; ?>">
+<!-- Botón de WhatsApp -->
+<div id="whatsapp-button">
+  <a href="https://wa.me/+573004413069?text=¡Chatea Conmigo!" target="_blank">
+    <img src="<?php echo BASE_URL . 'assets/images/whatsapp.jpg'; ?>">
       </a>
-    </div>
-    <style>
-    #whatsapp-button {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
+</div>
+<style>
+  #whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
 
-    #whatsapp-button img {
-      width: 70px; /* Ajusta el tamaño del icono según sea necesario */
-      height: 70px;
-      border-radius: 50%; /* Hace el icono circular, si el icono es cuadrado */
-    }
-  </style>
+  #whatsapp-button img {
+    width: 70px;
+    /* Ajusta el tamaño del icono según sea necesario */
+    height: 70px;
+    border-radius: 50%;
+    /* Hace el icono circular, si el icono es cuadrado */
+  }
+</style>
 
 
-    
+
 
 <!-- Login directo -->
 
@@ -217,7 +258,3 @@
 </script>
 <script src="<?php echo BASE_URL; ?>assets/js/carrito.js"></script>
 <script src="<?php echo BASE_URL; ?>assets/js/login.js"></script>
-
-
-
-

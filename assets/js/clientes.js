@@ -67,8 +67,21 @@ function generarMensajeCarrito() {
 }
 
 btnFinalizarPago.addEventListener('click', function() {
-    generarMensajeCarrito();
-    registrarPedido();
+Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Este proceso es irreversible",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, confirmar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            generarMensajeCarrito();
+            registrarPedido();
+        }
+    });
 });
 
 function getListaProductos() {

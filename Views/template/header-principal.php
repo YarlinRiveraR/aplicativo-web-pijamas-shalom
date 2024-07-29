@@ -66,17 +66,40 @@
          vertical-align: middle;
       }
    </style>
+
+
+<nav style="background-color: #252525" class="navbar navbar-expand-lg navbar-bg navbar-dark d-none d-lg-block" id="templatemo_nav_top">
+        <div class="container text-light">
+            <div style="background-color:#252525" class="w-100 d-flex justify-content-between">
+                <div>
+                    <i class="fa fa-envelope mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="mailto:Jperez540@misena.edu.co">Jperez540@misena.edu.co</a>
+                    <i class="fa fa-phone mx-2"></i>
+                    <a class="navbar-sm-brand text-light text-decoration-none" href="tel:+57300 4413069">+57 300 4413069</a>
+                </div>
+                <div class="d-flex justify-content-end align-items-center">
+                    <span class="me-2">Conoce nuestras redes | </span>
+                    <a class="text-light px-2" href="https://www.facebook.com/reel/6137300836308507?sfnsn=scwspwa&mibextid=5xHrnq" target="_blank" rel="sponsored">
+                        <i class="fab fa-facebook-f fa-sm fa-fw"></i>
+                    </a>
+                    <a class="text-light px-2" href="https://www.instagram.com/pijamas__shalom?igsh=MWY3YWtpaDBkNnhoZA==" target="_blank">
+                        <i class="fab fa-instagram fa-sm fa-fw"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
 </head>
 
 <body>
    <!-- banner bg main start -->
    <div class="banner_bg_main">
       <!-- logo section start -->
-      <div class="logo_section">
-         <div class="container">
+      <div style="background-color:#F4C2C2" class="logo_section">
+         <div style="background-color:#F4C2C2"class="container">
             <div class="row">
                <div class="col-sm-12">
-                  <div class="logo"><a href="<?php echo BASE_URL; ?>"><img src="<?php echo BASE_URL; ?>assets/images/logo.png" width="50"></a></div>
+                  <div class="logo"><a href="<?php echo BASE_URL; ?>"><img src="<?php echo BASE_URL; ?>assets/images/shalom-logo.png" width="130"></a></div>
                </div>
             </div>
          </div>
