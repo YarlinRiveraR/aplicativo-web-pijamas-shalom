@@ -36,7 +36,7 @@ class Categorias extends Controller
     //registrar o modificar una categoría
     public function registrar()
     {
-        if (isset($_POST['categoria']) && isset($_POST['descripcion'])) {
+        if (isset($_POST['categoria'])) {
             $categoria = $_POST['categoria'];
             $descripcion = $_POST['descripcion'];
             $id = $_POST['id'];
@@ -58,10 +58,9 @@ class Categorias extends Controller
                     }
                 //modoficar
                 } else {
-                    $data = $this->model->modificar($categoria, $id, $descripcion);
+                    $data = $this->model->modificar($categoria, $descripcion, $id);
                     if ($data == 1) {
-                        $respuesta = array('msg' => 'categoria modificado', 'icono' => 'success');
-                        print_r($data);
+                        $respuesta = array('msg' => 'categoria modificado', 'icono' => 'success');                        
                     } else {
                         $respuesta = array('msg' => 'error al modificar', 'icono' => 'error');
                     }

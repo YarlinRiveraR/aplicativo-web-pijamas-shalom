@@ -36,10 +36,10 @@ class CategoriasModel extends Query{
         return $this->select($sql);
     }
 
-    public function modificar($categoria, $id, $descripcion)
+    public function modificar($categoria, $descripcion, $id)
     {
         $sql = "UPDATE categorias SET categoria=?, descripcion=? WHERE id = ?";
-        $array = array($categoria, $id, $descripcion);
+        $array = array($categoria, $descripcion, $id);
         return $this->save($sql, $array);
     }
 }

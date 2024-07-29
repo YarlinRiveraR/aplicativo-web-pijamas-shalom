@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
             { data: "id" },
             { data: "categoria" },
             { data: "descripcion" },
-            { data: "accion" }
+            { data: "accion" },
         ],
         language,
         dom,
