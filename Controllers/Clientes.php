@@ -141,16 +141,25 @@ class Clientes extends Controller
         $json = json_decode($datos, true);
         $pedidos = $json['pedidos'];
         $productos = $json['productos'];
+        $total = $json['pedidos']['total'];
         if (is_array($pedidos) && is_array($productos)) {
-            $id_transaccion = $pedidos['id'];
-            $monto = $pedidos['purchase_units'][0]['amount']['value'];
-            $estado = $pedidos['status'];
+            
+            //$monto = 0.00; // Inicializa el monto del pedido
+
+            // Calcular el monto total del pedido
+            // foreach ($productos as $producto) {
+            //     $monto += $producto['precio'] * $producto['cantidad'];
+            // }
+
+            $monto = $total; // Total del pedido calculado en el frontend
+
+
+            $id_transaccion = uniqid();
+            // $monto = $pedidos['purchase_units'][0]['amount']['value'];
+            $estado = "COMPLETED";
             $fecha = date('Y-m-d H:i:s');
-            $email = $pedidos['payer']['email_address'];
-            $nombre = $pedidos['payer']['name']['given_name'];
-            $apellido = $pedidos['payer']['name']['surname'];
-            $direccion = $pedidos['purchase_units'][0]['shipping']['address']['address_line_1'];
-            $ciudad = $pedidos['purchase_units'][0]['shipping']['address']['admin_area_2'];
+            $email = $_SESSION['correoCliente'];
+            $nombre = $_SESSION['nombreCliente'];
             $id_cliente = $_SESSION['idCliente'];
             $data = $this->model->registrarPedido(
                 $id_transaccion,
@@ -159,9 +168,6 @@ class Clientes extends Controller
                 $fecha,
                 $email,
                 $nombre,
-                $apellido,
-                $direccion,
-                $ciudad,
                 $id_cliente
             );
             if ($data > 0) {

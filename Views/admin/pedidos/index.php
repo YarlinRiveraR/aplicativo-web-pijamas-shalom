@@ -25,8 +25,6 @@
                                 <th>Fecha</th>
                                 <th>Correo</th>
                                 <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Dirección</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -50,8 +48,6 @@
                                 <th>Fecha</th>
                                 <th>Correo</th>
                                 <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Dirección</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -75,8 +71,6 @@
                                 <th>Fecha</th>
                                 <th>Correo</th>
                                 <th>Nombre</th>
-                                <th>Apellido</th>
-                                <th>Dirección</th>
                                 <th></th>
                             </tr>
                         </thead>

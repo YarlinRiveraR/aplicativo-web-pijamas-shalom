@@ -47,12 +47,13 @@
                                         <hr>
                                         <p><?php echo $_SESSION['nombreCliente']; ?></p>
                                         <p><i class="fas fa-envelope"></i> <?php echo $_SESSION['correoCliente']; ?></p>
-
-                                        <button class="btn btn-success" id="btnFinalizarPago">
-                                            <i class="fab fa-whatsapp"></i> Completa tu pedido acá
-                                        </button>
-                                    
-                                        <a class="btn btn-danger" href="<?php echo BASE_URL . 'clientes/salir'; ?>"><i class="fas fa-times-circle"></i> Cerrar Sesión</a>
+                                        
+                                        <div class="flex-column-perfil">
+                                            <button class="btn btn-success" id="btnFinalizarPago">
+                                                <i class="fab fa-whatsapp"></i> Completa tu pedido acá
+                                            </button>                                                                    
+                                            <a class="btn btn-danger" href="<?php echo BASE_URL . 'clientes/salir'; ?>"><i class="fas fa-times-circle"></i> Cerrar Sesión</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
