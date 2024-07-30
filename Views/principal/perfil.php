@@ -150,7 +150,7 @@
     </div>
 </div>
 
-<?php include_once 'Views/template/footer-principal.php'; ?>
+<?php include_once 'Views/template/footer-secundario.php'; ?>
 
 <script type="text/javascript" src="<?php echo BASE_URL . 'assets/DataTables/datatables.min.js'; ?>"></script>
 

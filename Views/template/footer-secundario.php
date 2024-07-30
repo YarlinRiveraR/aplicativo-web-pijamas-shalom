@@ -14,9 +14,6 @@
       <div class="col-md-4 text-center">
         <h5>Colecciones</h5>
         <p><a href="<?php echo BASE_URL; ?>" class="footer_link">INICIO</a></p>
-        <?php foreach ($data['categorias'] as $categoria) { ?>
-          <p><a href="#categoria_<?php echo $categoria['id']; ?>" class="footer_link"><?php echo $categoria['categoria']; ?></a></p>
-        <?php } ?>
       </div>
 
       <!-- Íconos de Redes sociales -->
@@ -167,6 +164,9 @@
         </button>
       </div>
       <div class="modal-body m-3">
+        <div class="text-center">
+          <img class="img-thumbnail rounded-circle" src="<?php echo BASE_URL . 'assets/img/logo.png'; ?>" alt="" width="100">
+        </div>
         <div class="row">
           <div class="col-md-12" id="frmLogin">
             <div class="form-group mb-3">

@@ -39,44 +39,54 @@
 <?php } ?>
 
 <style>
-  /* Ocultar los iconos inicialmente */
-  .product-overlay {
-    display: none;
+  .card-prod {
+    position: relative;
+    height: 350px; /* Ajustar según sea necesario */
+    overflow: hidden;
+    transition: transform 0.3s ease; /* Transición suave al hacer hover */
   }
 
-  /* Mostrar los iconos cuando se hace hover sobre la tarjeta del producto */
-  .card-prod:hover .product-overlay {
-    display: flex;
+  .card-prod:hover {
+    transform: scale(1.02); /* Efecto de aumento al hacer hover */
   }
 
-  /* Asegurarse de que los iconos estén centrados */
   .product-overlay {
     position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(0, 0, 0, 0.5);
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0; /* Inicialmente oculto */
+    transition: opacity 0.3s ease; /* Transición suave */
+    z-index: 1; /* Asegura que el overlay esté por encima del contenido */
   }
 
-  .card-prod {
-    height: 350px; /* Ajustar según sea necesario */
+  .card-prod:hover .product-overlay {
+    opacity: 1; /* Mostrar el overlay al hacer hover */
   }
 
-  /* Asegurarse de que las imágenes no excedan el tamaño de la tarjeta y estén centradas */
   .card-prod img {
     max-height: 200px; /* Ajustar según sea necesario */
     object-fit: contain;
     width: 100%;
   }
 
-  /* Establecer un tamaño fijo para el cuerpo de la tarjeta */
   .card-prod .card-body {
     height: 100px; /* Ajustar según sea necesario */
     overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+    .fashion_taital{
+      
+      padding-top: 20px;
+    
   }
 </style>
 

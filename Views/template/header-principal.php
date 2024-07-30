@@ -68,7 +68,7 @@
    </style>
 
 
-<nav style="background-color: #252525" class="navbar navbar-expand-lg navbar-bg navbar-dark d-none d-lg-block" id="templatemo_nav_top">
+   <nav style="background-color: #252525" class="navbar navbar-expand-lg navbar-bg navbar-dark d-none d-lg-block" id="templatemo_nav_top">
         <div class="container text-light">
             <div style="background-color:#252525" class="w-100 d-flex justify-content-between">
                 <div>

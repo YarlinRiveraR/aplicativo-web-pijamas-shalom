@@ -180,7 +180,7 @@
 
 
 
-<?php include_once 'Views/template/footer-principal.php'; ?>
+<?php include_once 'Views/template/footer-secundario.php'; ?>
 
 <script src="<?php echo BASE_URL; ?>assets/js/modulos/detail.js"></script>
 
