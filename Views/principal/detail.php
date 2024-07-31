@@ -32,36 +32,43 @@
 
 
 
-                        <form action="" method="GET">
-                            <input type="hidden" id="idProducto" value="<?php echo $data['producto']['id']; ?>">
-                            <div class="row">
-                                <div class="col-auto">
-                                    <h2>Tallas Disponibles</h2>
-                                    <select id="idTalla">
-                                        <option value="S">S</option>
-                                        <option value="M">M</option>
-                                        <option value="L">L</option>
-                                        <option value="XL">XL</option>
-                                    </select>
-                                </div>
-                                <div class="col-auto">
-                                <h2>Cantidad</h2>
-                                    <ul class="list-inline pb-3">
-                                        <li class="list-inline-item text-right">
-                                            <input type="hidden" id="product-quanity" value="1">
-                                        </li>
-                                        <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
-                                        <li class="list-inline-item"><span id="var-value">1</span></li>
-                                        <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="row pb-3">
-                                <div class="col d-grid">
-                                    <button type="button" class="btn btn-success btn-lg" id="btnAddCart">Añadir al carrito</button>
-                                </div>
-                            </div>
-                        </form>
+    
+ <form action="" method="GET">
+    <input type="hidden" id="idProducto" value="<?php echo $data['producto']['id']; ?>">
+    <div class="row">
+        <!-- HTML para las tallas -->
+        <div class="col-auto">
+            <h2>Tallas Disponibles</h2>
+            <select id="idTalla">
+                <?php if (isset($data['tallas']) && !empty($data['tallas'])): ?>
+                    <?php foreach ($data['tallas'] as $talla): ?>
+                        <option value="<?php echo $talla['talla']; ?>"><?php echo $talla['talla']; ?></option>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <option value="">No hay tallas disponibles</option>
+                <?php endif; ?>
+            </select>
+        </div>
+
+        <div class="col-auto">
+            <h2>Cantidad</h2>
+            <ul class="list-inline pb-3">
+                <li class="list-inline-item text-right">
+                    <input type="hidden" id="product-quanity" value="1">
+                </li>
+                <li class="list-inline-item"><span class="btn btn-success" id="btn-minus">-</span></li>
+                <li class="list-inline-item"><span id="var-value">1</span></li>
+                <li class="list-inline-item"><span class="btn btn-success" id="btn-plus">+</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="row pb-3">
+        <div class="col d-grid">
+            <button type="button" class="btn btn-success btn-lg" id="btnAddCart">Añadir al carrito</button>
+        </div>
+    </div>
+</form>
+
 
                     </div>
                 </div>

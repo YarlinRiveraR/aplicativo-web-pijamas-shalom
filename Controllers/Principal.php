@@ -60,9 +60,11 @@ class Principal extends Controller
         $id_categoria = $data['producto']['id_categoria'];
         $data['relacionados'] = $this->model->getAleatorios($id_categoria, $data['producto']['id']);
         $data['title'] = $data['producto']['nombre'];
-        $tallas['talla'] = $this->model->obtenerTallasPorProducto($id_producto);
+       $data['tallas'] = $this->model->obtenerTallasPorProducto($id_producto);
         $this->views->getView('principal', "detail", $data);
+        
     }
+    
     //vista categorias
     public function categorias($datos)
     {
@@ -92,4 +94,5 @@ class Principal extends Controller
         $data['id_categoria'] = $id_categoria;
         $this->views->getView('principal', "categorias", $data);
     }
+    
 }

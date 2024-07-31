@@ -42,6 +42,7 @@ class CategoriasModel extends Query{
         $array = array($categoria, $descripcion, $id);
         return $this->save($sql, $array);
     }
+        
 }
  
 ?>

@@ -1,51 +1,42 @@
 <?php
-class Query extends Conexion{
-    private $pdo, $con, $sql, $datos;
+class Query extends Conexion {
+    protected $pdo, $con, $sql, $datos; // Cambiado a protected para acceso en clases hijas
+
     public function __construct() {
         $this->pdo = new Conexion();
         $this->con = $this->pdo->conect();
     }
-    public function select(string $sql)
-    {
+
+    public function select(string $sql, array $params = []) {
         $this->sql = $sql;
         $resul = $this->con->prepare($this->sql);
-        $resul->execute();
+        $resul->execute($params);
         $data = $resul->fetch(PDO::FETCH_ASSOC);
         return $data;
     }
-    public function selectAll(string $sql)
-    {
+
+    public function selectAll(string $sql, array $params = []) {
         $this->sql = $sql;
         $resul = $this->con->prepare($this->sql);
-        $resul->execute();
+        $resul->execute($params);
         $data = $resul->fetchAll(PDO::FETCH_ASSOC);
         return $data;
     }
-    public function save(string $sql, array $datos)
-    {
+
+    public function save(string $sql, array $datos) {
         $this->sql = $sql;
         $this->datos = $datos;
         $insert = $this->con->prepare($this->sql);
         $data = $insert->execute($this->datos);
-        if ($data) {
-            $res = 1;
-        }else{
-            $res = 0;
-        }
-        return $res;
+        return $data ? 1 : 0;
     }
-    public function insertar(string $sql, array $datos)
-    {
+
+    public function insertar(string $sql, array $datos) {
         $this->sql = $sql;
         $this->datos = $datos;
         $insert = $this->con->prepare($this->sql);
         $data = $insert->execute($this->datos);
-        if ($data) {
-            $res = $this->con->lastInsertId();
-        } else {
-            $res = 0;
-        }
-        return $res;
+        return $data ? $this->con->lastInsertId() : 0;
     }
 }
 ?>
