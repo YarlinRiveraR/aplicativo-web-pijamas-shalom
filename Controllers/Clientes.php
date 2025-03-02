@@ -76,7 +76,7 @@ class Clientes extends Controller
                 $mail->Port       = PUERTO_SMTP;                                    //Puerto TCP para conectarse; usa 587 si has configurado `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
                 //Destinatarios
-                $mail->setFrom('shalom.pijamas.notificaciones@gmail.com', TITLE);
+                $mail->setFrom('pijamas.shalom.notificaciones@gmail.com', TITLE);
                 $mail->addAddress($_POST['correo']);
 
                 //Contenido
@@ -144,13 +144,7 @@ class Clientes extends Controller
         $total = $json['pedidos']['total'];
         if (is_array($pedidos) && is_array($productos)) {
             
-            //$monto = 0.00; // Inicializa el monto del pedido
-
-            // Calcular el monto total del pedido
-            // foreach ($productos as $producto) {
-            //     $monto += $producto['precio'] * $producto['cantidad'];
-            // }
-
+            
             $monto = $total; // Total del pedido calculado en el frontend
 
 

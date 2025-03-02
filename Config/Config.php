@@ -9,8 +9,8 @@ const TITLE = "Shalom Pijamas";
 const MONEDA = "COP";
 const CLIENT_ID = "AQHEaKqx7wGj892mdHzChyAoHtUBbttQB0cGRdSenDHd60EUpBAfb-5oZ8XTnc83wPPKticfsAAtwN2E";
 
-const USER_SMTP = "shalom.pijamas.notificaciones@gmail.com";
-const PASS_SMTP = "ramqcpwnfexdwtec";
+const USER_SMTP = "pijamas.shalom.notificaciones@gmail.com";
+const PASS_SMTP = "npdpfrihvvcxbkxd";
 const PUERTO_SMTP = 465;
 const HOST_SMTP = "smtp.gmail.com";
 ?>

@@ -61,6 +61,10 @@
                   <div class="text-center">
                     <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Iniciar</button>
                   </div>
+                   <!-- NEW!!! -->
+                   <div class="text-center">
+                    <a href="<?php echo BASE_URL . 'admin/recovery'; ?>">¿Olvidaste tu contraseña?</a>
+                  </div>
                 </form>
               </div>
             </div>

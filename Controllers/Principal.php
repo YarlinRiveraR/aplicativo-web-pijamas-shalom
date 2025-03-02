@@ -27,7 +27,7 @@ class Principal extends Controller
             }
         }        
         $array['total'] = number_format($total, 2);
-        $array['totalPaypal'] = number_format($total, 2, '.', '');
+        //$array['totalPaypal'] = number_format($total, 2, '.', '');
         $array['moneda'] = MONEDA;
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
@@ -53,6 +53,15 @@ class Principal extends Controller
         $data['total'] = ceil($total['total'] / $porPagina);
         $this->views->getView('principal', "shop", $data);
     }
+
+    //NEW!!!
+    //vista lista deseos
+    public function deseo()
+    {
+        $data['title'] = 'Tu lista de deseo';
+        $this->views->getView('principal', "deseo", $data);
+    }
+
     //vista detail
     public function detail($id_producto)
     {

@@ -1,4 +1,9 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
+require 'vendor/autoload.php';
 class Admin extends Controller
 {
     public function __construct()
@@ -17,6 +22,119 @@ class Admin extends Controller
         $data['title'] = 'Acceso al sistema';
         $this->views->getView('admin', "login", $data);
     }
+
+     //NEW!!!
+     public function recovery() {
+        // Puedes enviar datos a la vista si lo necesitas, por ejemplo, el título de la página
+        $data['title'] = 'Recuperar Contraseña';
+        $this->views->getView('admin', "recovery", $data);
+    }
+
+    public function sendRecovery() {
+        if (isset($_POST['email']) && !empty($_POST['email'])) {
+            $correo = $_POST['email'];
+            // Busca el usuario activo por correo
+            $dataUser = $this->model->getUsuario($correo);
+            if (!empty($dataUser)) {
+                // Genera un token único para la recuperación
+                $token = md5(uniqid(rand(), true));
+                // Actualiza el token en la base de datos (asegúrate de tener la columna "token")
+                $update = $this->model->updateToken($correo, $token);
+                if ($update) {
+                    $mail = new PHPMailer(true);
+                    try {
+                        // Configuración del servidor SMTP
+                        $mail->SMTPDebug = 0;
+                        $mail->isSMTP();
+                        $mail->Host       = HOST_SMTP;        // Ej.: smtp.gmail.com
+                        $mail->SMTPAuth   = true;
+                        $mail->Username   = USER_SMTP;        // Tu usuario SMTP
+                        $mail->Password   = PASS_SMTP;        // Tu contraseña SMTP
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                        $mail->Port       = PUERTO_SMTP;       // Ej.: 465
+
+                        // Configuración del remitente y destinatario
+                        $mail->setFrom('pijamas.shalom.notificaciones@gmail.com', TITLE);
+                        $mail->addAddress($correo);
+
+                        // Contenido del correo
+                        $mail->isHTML(true);
+                        $mail->Subject = 'Recuperación de Contraseña - ' . TITLE;
+                        $mail->Body    = 'Para recuperar tu contraseña, haz clic en el siguiente enlace: <a href="' . BASE_URL . 'admin/resetPassword/' . $token . '">Recuperar Contraseña</a>';
+                        $mail->AltBody = 'Para recuperar tu contraseña, visita: ' . BASE_URL . 'admin/resetPassword/' . $token;
+
+                        $mail->send();
+                        $mensaje = array('msg' => 'Correo enviado. Revisa tu bandeja de entrada.', 'icono' => 'success');
+                    } catch (Exception $e) {
+                        $mensaje = array('msg' => 'Error al enviar correo: ' . $mail->ErrorInfo, 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'Error al actualizar el token.', 'icono' => 'error');
+                }
+            } else {
+                $mensaje = array('msg' => 'El correo no existe.', 'icono' => 'error');
+            }
+        } else {
+            $mensaje = array('msg' => 'El correo es requerido.', 'icono' => 'error');
+        }
+        echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+
+    public function resetPassword($token) {
+        // Busca el usuario por token
+        $user = $this->model->getUserByToken($token);
+        if (empty($user)) {
+            header('Location: ' . BASE_URL . 'admin?msg=token_invalido');
+            exit;
+        }
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Verifica que ambos campos estén completos
+            if (empty($_POST['new_password']) || empty($_POST['confirm_password'])) {
+                $data['error'] = 'Todos los campos son requeridos.';
+                $data['title'] = 'Restablecer Contraseña';
+                $data['token'] = $token;
+                $this->views->getView('admin', 'reset_password', $data);
+                return;
+            }
+            
+            $newPassword = $_POST['new_password'];
+            $confirmPassword = $_POST['confirm_password'];
+            
+            if ($newPassword !== $confirmPassword) {
+                $data['error'] = 'Las contraseñas no coinciden.';
+                $data['title'] = 'Restablecer Contraseña';
+                $data['token'] = $token;
+                $this->views->getView('admin', 'reset_password', $data);
+                return;
+            }
+            
+            // Hashea la nueva contraseña
+            $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+            // Actualiza la contraseña en la base de datos
+            $update = $this->model->updateNewPassword($user['correo'], $hashedPassword);
+            if ($update) {
+                // Limpia el token para que no se pueda reutilizar
+                $this->model->clearToken($user['correo']);
+                header('Location: ' . BASE_URL . 'admin?msg=password_updated');
+                exit;
+            } else {
+                $data['error'] = 'Error al actualizar la contraseña. Inténtalo de nuevo.';
+                $data['title'] = 'Restablecer Contraseña';
+                $data['token'] = $token;
+                $this->views->getView('admin', 'reset_password', $data);
+                return;
+            }
+        } else {
+            // Si es GET, muestra el formulario de reseteo
+            $data['title'] = 'Restablecer Contraseña';
+            $data['token'] = $token;
+            $this->views->getView('admin', 'reset_password', $data);
+        }
+    }
+    
 
     //validar las credenciales de inicio de sesión del administración
     public function validar()
