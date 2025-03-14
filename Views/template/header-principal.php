@@ -140,6 +140,11 @@
                               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
                               <span class="padding_10" id="btnCantidadCarrito">Cart</span></a>
                         </li>
+                        <!-- NEW!!! -->
+                        <li><a href="<?php echo BASE_URL . 'principal/deseo' ?>">
+                           <i class="fas fa-fw fa-heart" aria-hidden="true"></i>
+                           <span class="padding_10" id="btnCantidadDeseo">0</span></a>
+                        </li>
                         <?php if (empty($_SESSION['nombreCliente'])) {
                            echo '<li><a href="#" data-toggle="modal" data-target="#modalLogin">
                                  <i class="fa fa-user" aria-hidden="true"></i>

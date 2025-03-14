@@ -67,6 +67,12 @@
             <button type="button" class="btn btn-success btn-lg" id="btnAddCart">Añadir al carrito</button>
         </div>
     </div>
+    <!-- NEW!!! -->
+    <div class="row pb-3">
+        <div class="col d-grid">
+            <button type="button" class="btn btn-success btn-lg" id="btnAddWish">Lista de deseos</button>
+        </div>
+    </div>
 </form>
 
 
@@ -190,7 +196,7 @@
 <?php include_once 'Views/template/footer-secundario.php'; ?>
 
 <script src="<?php echo BASE_URL; ?>assets/js/modulos/detail.js"></script>
-
+<script src="<?php echo BASE_URL; ?>assets/js/modulos/listaDeseo.js"></script>
 <!-- Start Slider Script -->
 <script src="<?php echo BASE_URL; ?>assets/js/slick.min.js"></script>
 <script>

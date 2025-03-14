@@ -108,65 +108,22 @@ function getListaProductos() {
                         <td><span class="badge bg-primary"><h3>${producto.cantidad}</h3></span></td>
                         <td>${producto.subTotal}</td>
                     </tr>`;
-                    // Agregar producto para PayPal
-                    // let json = {
-                    //     "name": producto.nombre,
-                    //     /* Shows within upper-right dropdown during payment approval */
-                    //     "unit_amount": {
-                    //         "currency_code": res.moneda,
-                    //         "value": producto.precio
-                    //     },
-                    //     "quantity": producto.cantidad
-                    // }
-                    // productosjson.push(json);
+                    
                 }
-                //console.log(res.totalPaypal);
+                
                 tableLista.innerHTML = html;
-                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + res.moneda + ' ' + res.total;
-                //botonPaypal(res.totalPaypal, res.moneda);
+                document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + res.total + ' ' + res.moneda;
             } else {
                 tableLista.innerHTML = `
                 <tr>
-                    <td colspan="5" class="text-center">CARRITO VACIO</td>
+                    <td colspan="6" class="text-center">CARRITO VACIO</td>
                 </tr>
                 `;
             }
         }
     }
 }
-//link boton
-// https://developer.paypal.com/docs/checkout/
 
-//https://developer.paypal.com/api/rest/reference/currency-codes/
-
-// function botonPaypal(total, moneda) {
-//     paypal.Buttons({
-//         // Sets up the transaction when a payment button is clicked
-//         createOrder: (data, actions) => {
-//             return actions.order.create({
-//                 "purchase_units": [{
-//                     "amount": {
-//                         "currency_code": moneda,
-//                         "value": total,
-//                         "breakdown": {
-//                             "item_total": { /* Required when including the `items` array */
-//                                 "currency_code": moneda,
-//                                 "value": total
-//                             }
-//                         }
-//                     },
-//                     "items": productosjson
-//                 }]
-//             });
-//         },
-//         // Finalize the transaction after payer approval
-//         onApprove: (data, actions) => {
-//             return actions.order.capture().then(function(orderData) {
-//                 registrarPedido(orderData)
-//             });
-//         }
-//     }).render('#paypal-button-container');
-// }
 
 
 function registrarPedido() {
@@ -211,32 +168,6 @@ function registrarPedido() {
 
 
 
-
-
-
-// function registrarPedido(datos) {
-//     const url = base_url + 'clientes/registrarPedido';
-//     const http = new XMLHttpRequest();
-//     http.open('POST', url, true);
-//     http.send(JSON.stringify({
-//         pedidos: datos,
-//         productos: listaCarrito
-//     }));
-//     http.onreadystatechange = function() {
-//         if (this.readyState == 4 && this.status == 200) {
-//             console.log(this.responseText);
-//             const res = JSON.parse(this.responseText);
-//             Swal.fire("Aviso?", res.msg, res.icono);
-//             if (res.icono == 'success') {
-//                 localStorage.removeItem('listaCarrito');
-//                 setTimeout(() => {
-//                     window.location.reload();
-//                 }, 2000);
-//             }
-//         }
-//     }
-// }
-
 function verPedido(idPedido) {
     estadoEnviado.classList.remove('bg-info');
     estadoProceso.classList.remove('bg-info');
@@ -259,11 +190,13 @@ function verPedido(idPedido) {
             }
             res.productos.forEach(row => {
                 let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
+                let precioFormato = formatearPeso(parseFloat(row.precio));
+                let subTotalFormato = formatearPeso(subTotal);
                 html += `<tr>
                     <td>${row.producto}</td>
-                    <td><span class="badge bg-warning">${res.moneda + ' ' + row.precio}</span></td>
+                    <td><span class="badge bg-warning">${res.moneda + ' ' + precioFormato}</span></td>
                     <td><span class="badge bg-primary">${row.cantidad}</span></td>
-                    <td>${subTotal.toFixed(2)}</td>
+                    <td>${subTotalFormato}</td>
                 </tr>`;
             });
             document.querySelector('#tablePedidos tbody').innerHTML = html;

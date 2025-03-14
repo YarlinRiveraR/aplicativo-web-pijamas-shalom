@@ -14,6 +14,15 @@ const claveLogin = document.querySelector("#claveLogin");
 
 const inputBusqueda = document.querySelector("#search");
 
+//NEW!!!
+const btnForgot = document.querySelector("#btnForgot");
+const frmRecuperarPass = document.querySelector("#frmRecuperarPass");
+const btnVolverLogin = document.querySelector("#btnVolverLogin");
+const btnRecuperar = document.querySelector("#btnRecuperar");
+const correoRecuperar = document.querySelector("#correoRecuperar");
+const frmRecuperarNewPass = document.querySelector("#frmRecuperarNewPass");
+const btnRecuperarNew = document.querySelector("#btnRecuperarNew");
+
 document.addEventListener("DOMContentLoaded", function () {
   btnRegister.addEventListener("click", function () {
     frmLogin.classList.add("d-none");
@@ -23,6 +32,19 @@ document.addEventListener("DOMContentLoaded", function () {
     frmRegister.classList.add("d-none");
     frmLogin.classList.remove("d-none");
   });
+  //NEW!!!
+  btnForgot.addEventListener("click", function (e) {
+    frmLogin.classList.add("d-none");
+    frmRegister.classList.add("d-none");
+    frmRecuperarPass.classList.remove("d-none");
+    frmRecuperarNewPass.classList.add("d-none");
+  });
+  btnVolverLogin.addEventListener("click", function(e) {
+    frmRecuperarPass.classList.add("d-none");
+    frmRecuperarNewPass.classList.add("d-none");
+    frmLogin.classList.remove("d-none");
+  });
+
   //registro
   registrarse.addEventListener("click", function () {
     if (
@@ -79,6 +101,76 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  //NEW!!!
+  // Procesar solicitud de recuperación (enviar correo)
+  btnRecuperar.addEventListener("click", function(e) {
+    e.preventDefault();
+    if (correoRecuperar.value.trim() === "") {
+      Swal.fire("Aviso?", "El correo es requerido", "warning");
+    } else {
+      let formData = new FormData();
+      formData.append("email", correoRecuperar.value.trim());
+      const url = base_url + "clientes/sendRecovery";
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(formData);
+      http.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          const res = JSON.parse(this.responseText);
+          Swal.fire("Aviso?", res.msg, res.icono);
+          if (res.icono === "success") {
+            // Opcional: Si deseas, puedes cerrar el modal o redirigir al login
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          }
+        }
+      };
+    }
+  });
+
+  //procesar el restablecimiento de nueva contraseña
+  btnRecuperarNew.addEventListener("click", function(e) {
+    e.preventDefault();
+    const newPass = document.querySelector("#new_password").value.trim();
+    const confirmPass = document.querySelector("#confirm_password").value.trim();
+    const token = document.querySelector("#tokenRecuperacion").value; // Asegúrate de asignar el token aquí cuando se acceda al enlace de reset.
+    if(newPass === "" || confirmPass === "") {
+      Swal.fire("Aviso?", "Todos los campos son requeridos", "warning");
+    } else if(newPass !== confirmPass) {
+      Swal.fire("Aviso?", "Las contraseñas no coinciden", "warning");
+    } else {
+      let formData = new FormData();
+      formData.append("new_password", newPass);
+      formData.append("confirm_password", confirmPass);
+      const url = base_url + "clientes/resetPassword/" + token;
+      const http = new XMLHttpRequest();
+      http.open("POST", url, true);
+      http.send(formData);
+      http.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+          const res = JSON.parse(this.responseText);
+          Swal.fire("Aviso?", res.msg, res.icono);
+          if (res.icono === "success") {
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          }
+        }
+      }
+    }
+  });
+
+  // Función para obtener el token desde la URL
+function getTokenFromUrl() {
+  const urlParts = window.location.pathname.split('/');
+  return urlParts[urlParts.length - 1];
+}
+
+// Ahora usas "token" en tu solicitud AJAX al resetear la contraseña
+const token = getTokenFromUrl();
+
+
   //busqueda de productos
   inputBusqueda.addEventListener("keyup", function (e) {
     if (e.target.value != "") {
@@ -91,6 +183,8 @@ document.addEventListener("DOMContentLoaded", function () {
           const res = JSON.parse(this.responseText);
           let html = "";
           res.forEach((producto) => {
+            //NEW!!!
+            let precioFormateado = formatearPeso(parseFloat(producto.precio));
             html += `<div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                       <a href="#">
@@ -99,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
                       <div class="card-body">
                         <a href="#" class="h2 text-decoration-none text-dark">${producto.nombre}</a>
                         <p class="card-text">
-                        $${producto.precio}
+                        ${precioFormateado}
                         </p>
                         <div class="buy_bt"><a href="#" onclick="agregarCarrito(${producto.id}, 1)">Añadir</a></div>
                       </div>

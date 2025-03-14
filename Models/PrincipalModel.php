@@ -34,9 +34,17 @@ class PrincipalModel extends Query {
         return $this->select($sql, [$id_categoria]);
     }
 
+    //productos relacionados aleatorios
     public function getAleatorios($id_categoria, $id_producto) {
         $sql = "SELECT * FROM productos WHERE id_categoria = ? AND id != ? ORDER BY RAND() LIMIT 20";
         return $this->selectAll($sql, [$id_categoria, $id_producto]);
+    }
+
+    //NEW!!!
+    //obtener producto a partir de la lista de deseo
+    public function getListaDeseo($id_producto) {
+        $sql = "SELECT * FROM productos WHERE id = $id_producto";
+        return $this->select($sql);
     }
 
     public function obtenerTallasPorProducto($producto_id) {
@@ -45,9 +53,9 @@ class PrincipalModel extends Query {
         INNER JOIN categoria_talla ct ON t.id = ct.talla_id
         INNER JOIN productos p ON p.id_categoria = ct.categoria_id
         WHERE p.id = ?";
-$query = $this->con->prepare($sql);
-$query->execute([$producto_id]);
-return $query->fetchAll(PDO::FETCH_ASSOC);
+        $query = $this->con->prepare($sql);
+        $query->execute([$producto_id]);
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
-}
 ?>

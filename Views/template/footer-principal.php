@@ -168,6 +168,7 @@
       </div>
       <div class="modal-body m-3">
         <div class="row">
+
           <div class="col-md-12" id="frmLogin">
             <div class="form-group mb-3">
               <label for="correoLogin"><i class="fas fa-envelope"></i> Correo</label>
@@ -178,6 +179,9 @@
               <input id="claveLogin" class="form-control" type="text" name="claveLogin" placeholder="Contraseña">
             </div>
             <a href="#" id="btnRegister">Todavia no tienes una cuenta?</a>
+            <div class="text-left">
+              <a href="#" id="btnForgot">Olvidaste tu contraseña</a>
+            </div>
             <div class="float-right">
               <button class="btn btn-primary" type="button" id="login">Login</button>
             </div>
@@ -201,6 +205,33 @@
               <button class="btn btn-primary" type="button" id="registrarse">Registrarse</button>
             </div>
           </div>
+          <!-- NEW!!! -->
+          <!-- formulario de solicitud de recuperación (enviar correo) -->
+          <div class="col-md-12 d-none" id="frmRecuperarPass">            
+            <div class="form-group mb-3">
+              <label for="correoRecuperar"><i class="fas fa-envelope"></i> Correo</label>
+              <input id="correoRecuperar" class="form-control" type="email" name="correoRecuperar" placeholder="Correo Electrónico">
+            </div>            
+            <a href="#" id="btnVolverLogin">Volver al incio de sesión</a>
+            <div class="float-right">
+              <button class="btn btn-primary" type="button" id="btnRecuperar">Recuperar contraseña</button>
+            </div>
+          </div>
+          <!-- formulario de restablecimiento de nueva contraseña -->
+          <div class="col-md-12 d-none" id="frmRecuperarNewPass">            
+            <div class="form-group mb-3">
+              <label for="new_password"><i class="fas fa-key"></i> Nueva Contraseña</label>
+              <input id="new_password" class="form-control" type="password" name="new_password" placeholder="Nueva Contraseña">
+            </div>
+            <div class="form-group mb-3">
+              <label for="confirm_password"><i class="fas fa-key"></i> Confirmar Nueva Contraseña</label>
+              <input id="confirm_password" class="form-control" type="password" name="confirm_password" placeholder="Confirmar Nueva Contraseña">
+            </div>
+            <div class="float-right">
+              <button class="btn btn-primary" type="button" id="btnRecuperarNew">Restablecer Contraseña</button>
+            </div>
+          </div>
+          
         </div>
       </div>
 
