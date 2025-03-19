@@ -168,7 +168,7 @@
       </div>
       <div class="modal-body m-3">
         <div class="row">
-
+          <!-- Formulario de Login -->
           <div class="col-md-12" id="frmLogin">
             <div class="form-group mb-3">
               <label for="correoLogin"><i class="fas fa-envelope"></i> Correo</label>

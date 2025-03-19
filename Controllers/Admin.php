@@ -53,7 +53,8 @@ class Admin extends Controller
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                         $mail->Port       = PUERTO_SMTP;       // Ej.: 465
 
-                        // Configuración del remitente y destinatario
+                        $mail->CharSet = 'UTF-8';
+                        
                         $mail->setFrom('pijamas.shalom.notificaciones@gmail.com', TITLE);
                         $mail->addAddress($correo);
 

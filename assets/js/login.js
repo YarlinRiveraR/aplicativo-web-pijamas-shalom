@@ -129,12 +129,26 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+// Detectar si existe ?resetToken=... en la URL
+const urlParams = new URLSearchParams(window.location.search);
+const resetToken = urlParams.get('resetToken');
+if (resetToken) {
+  // Abrir el modal de login y mostrar frmRecuperarNewPass
+  $('#modalLogin').modal('show');
+  frmLogin.classList.add("d-none");
+  frmRegister.classList.add("d-none");
+  frmRecuperarPass.classList.add("d-none");
+  frmRecuperarNewPass.classList.remove("d-none");
+}
+
   //procesar el restablecimiento de nueva contraseña
   btnRecuperarNew.addEventListener("click", function(e) {
     e.preventDefault();
     const newPass = document.querySelector("#new_password").value.trim();
     const confirmPass = document.querySelector("#confirm_password").value.trim();
-    const token = document.querySelector("#tokenRecuperacion").value; // Asegúrate de asignar el token aquí cuando se acceda al enlace de reset.
+
+    const urlParams2 = new URLSearchParams(window.location.search);
+    const resetToken2 = urlParams2.get('resetToken');
     if(newPass === "" || confirmPass === "") {
       Swal.fire("Aviso?", "Todos los campos son requeridos", "warning");
     } else if(newPass !== confirmPass) {
@@ -143,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
       let formData = new FormData();
       formData.append("new_password", newPass);
       formData.append("confirm_password", confirmPass);
-      const url = base_url + "clientes/resetPassword/" + token;
+      const url = base_url + "clientes/resetPassword/" + resetToken2;
       const http = new XMLHttpRequest();
       http.open("POST", url, true);
       http.send(formData);
@@ -153,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
           Swal.fire("Aviso?", res.msg, res.icono);
           if (res.icono === "success") {
             setTimeout(() => {
-              window.location.reload();
+              window.location.href = base_url;
             }, 2000);
           }
         }
@@ -162,13 +176,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Función para obtener el token desde la URL
-function getTokenFromUrl() {
-  const urlParts = window.location.pathname.split('/');
-  return urlParts[urlParts.length - 1];
-}
+// function getTokenFromUrl() {
+//   const urlParts = window.location.pathname.split('/');
+//   return urlParts[urlParts.length - 1];
+// }
 
-// Ahora usas "token" en tu solicitud AJAX al resetear la contraseña
-const token = getTokenFromUrl();
+// // Ahora usas "token" en tu solicitud AJAX al resetear la contraseña
+// const token = getTokenFromUrl();
 
 
   //busqueda de productos

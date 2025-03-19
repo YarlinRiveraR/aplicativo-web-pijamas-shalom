@@ -148,7 +148,7 @@ function getListaCarrito() {
             }
 
             tableListaCarrito.innerHTML = html;
-            document.querySelector('#totalGeneral').textContent = res.total + ' ' + res.moneda;
+            document.querySelector('#totalGeneral').textContent = 'Total: ' + res.total + ' ' + res.moneda;
             btnEliminarCarrito();
             cambiarCantidad();
         }

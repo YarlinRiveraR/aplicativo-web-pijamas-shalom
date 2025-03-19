@@ -158,14 +158,16 @@ class Clientes extends Controller
                         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
                         $mail->Port       = PUERTO_SMTP;
 
+                        $mail->CharSet = 'UTF-8';
+
                         $mail->setFrom('pijamas.shalom.notificaciones@gmail.com', TITLE);
                         $mail->addAddress($correo);
 
                         $mail->isHTML(true);
                         $mail->Subject = 'Recuperación de Contraseña - ' . TITLE;
                         // El enlace lleva al método resetPassword, que se procesará en el mismo modal o en una página separada
-                        $mail->Body    = 'Para recuperar tu contraseña, haz clic en el siguiente enlace: <a href="' . BASE_URL . 'clientes/resetPassword/' . $token . '">Recuperar Contraseña</a>';
-                        $mail->AltBody = 'Para recuperar tu contraseña, visita: ' . BASE_URL . 'clientes/resetPassword/' . $token;
+                        $mail->Body    = 'Para recuperar tu contraseña, haz clic en el siguiente enlace: <a href="' . BASE_URL . '?resetToken=' . $token . '">Recuperar Contraseña</a>';
+                        $mail->AltBody = 'Para recuperar tu contraseña, visita: ' . BASE_URL . '?resetToken=' . $token;
 
                         $mail->send();
                         $mensaje = array('msg' => 'Correo enviado. Revisa tu bandeja de entrada.', 'icono' => 'success');
@@ -186,7 +188,7 @@ class Clientes extends Controller
     }
 
     // Permite al cliente restablecer su contraseña usando el token recibido por correo
-    public function resetPassword($token) {
+    public function resetPassword($token){
         $cliente = $this->model->getClienteByToken($token);
         if (empty($cliente)) {
             header('Location: ' . BASE_URL . '?msg=token_invalido');
@@ -194,38 +196,32 @@ class Clientes extends Controller
         }
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (empty($_POST['new_password']) || empty($_POST['confirm_password'])) {
-                $data['error'] = 'Todos los campos son requeridos.';
-                $data['title'] = 'Restablecer Contraseña';
-                $data['token'] = $token;
-                $this->views->getView('principal', 'resetPasswordCliente', $data);
-                return;
+                $mensaje = array('msg' => 'Todos los campos son requeridos.', 'icono' => 'warning');
+                echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+                die();
             }
             $newPassword = $_POST['new_password'];
             $confirmPassword = $_POST['confirm_password'];
             if ($newPassword !== $confirmPassword) {
-                $data['error'] = 'Las contraseñas no coinciden.';
-                $data['title'] = 'Restablecer Contraseña';
-                $data['token'] = $token;
-                $this->views->getView('principal', 'resetPasswordCliente', $data);
-                return;
+                $mensaje = array('msg' => 'Las contraseñas no coinciden.', 'icono' => 'warning');
+                echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+                die();
             }
             $hash = password_hash($newPassword, PASSWORD_DEFAULT);
             $update = $this->model->updatePassword($cliente['correo'], $hash);
             if ($update) {
                 $this->model->clearToken($cliente['correo']);
-                header('Location: ' . BASE_URL . '?msg=password_updated');
-                exit;
+                $mensaje = array('msg' => 'Contraseña actualizada', 'icono' => 'success');
             } else {
-                $data['error'] = 'Error al actualizar la contraseña. Inténtalo de nuevo.';
-                $data['title'] = 'Restablecer Contraseña';
-                $data['token'] = $token;
-                $this->views->getView('principal', 'resetPasswordCliente', $data);
-                return;
+                $mensaje = array('msg' => 'Error al actualizar la contraseña. Inténtalo de nuevo.', 'icono' => 'error');
             }
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
         } else {
-            $data['title'] = 'Restablecer Contraseña';
-            $data['token'] = $token;
-            $this->views->getView('principal', 'resetPasswordCliente', $data);
+            // Para solicitudes GET, redirigimos o devolvemos un error
+            $mensaje = array('msg' => 'Método no permitido', 'icono' => 'error');
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
         }
     }
 
