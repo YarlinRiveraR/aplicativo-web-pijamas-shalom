@@ -123,6 +123,7 @@
 
                <div class="main">
                   <!-- Another variation with a button -->
+                   <div class="search-container">
                   <div class="input-group">
                      <input type="text" class="form-control" placeholder="¿Qué estas buscando?" id="search">
                      <div class="input-group-append">
@@ -132,6 +133,7 @@
                      </div>
                   </div>
                   <div class="position-absolute row" id="resultBusqueda" style="z-index: 99999;"></div>
+                  </div>
                </div>
                <div class="header_box">
                   <div class="login_menu">
