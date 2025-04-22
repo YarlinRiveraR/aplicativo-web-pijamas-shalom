@@ -157,6 +157,7 @@
 <script src="<?php echo BASE_URL; ?>assets/js/es-ES.js"></script>
 
 <script src="<?php echo BASE_URL . 'assets/js/clientes.js'; ?>"></script>
+<script src="<?php echo BASE_URL . 'assets/js/helper.js'; ?>"></script>
 
 <!-- End Script -->
 </body>

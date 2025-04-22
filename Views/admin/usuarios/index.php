@@ -12,7 +12,6 @@
                         <th>Nombres</th>
                         <th>Apellidos</th>
                         <th>Correo</th>
-                        <th>Foto</th>
                         <th></th>
                     </tr>
                 </thead>

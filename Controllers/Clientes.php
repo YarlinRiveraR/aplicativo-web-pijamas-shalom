@@ -75,8 +75,10 @@ class Clientes extends Controller
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Habilitar cifrado TLS implícito
                 $mail->Port       = PUERTO_SMTP;                                    //Puerto TCP para conectarse; usa 587 si has configurado `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
+                $mail->CharSet = 'UTF-8';
+
                 //Destinatarios
-                $mail->setFrom('shalom.pijamas.notificaciones@gmail.com', TITLE);
+                $mail->setFrom('pijamas.shalom.notificaciones@gmail.com', TITLE);
                 $mail->addAddress($_POST['correo']);
 
                 //Contenido
@@ -134,6 +136,93 @@ class Clientes extends Controller
             die();
         }
     }
+    
+    //NEW!!!
+    // Recuperar contraseña (correo)
+    public function sendRecovery() {
+        if (isset($_POST['email']) && !empty($_POST['email'])) {
+            $correo = $_POST['email'];
+            $cliente = $this->model->getVerificar($correo);
+            if (!empty($cliente)) {
+                $token = md5(uniqid(rand(), true));
+                $update = $this->model->updateToken($correo, $token);
+                if ($update) {
+                    $mail = new PHPMailer(true);
+                    try {
+                        $mail->SMTPDebug = 0;
+                        $mail->isSMTP();
+                        $mail->Host       = HOST_SMTP;
+                        $mail->SMTPAuth   = true;
+                        $mail->Username   = USER_SMTP;
+                        $mail->Password   = PASS_SMTP;
+                        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+                        $mail->Port       = PUERTO_SMTP;
+
+                        $mail->CharSet = 'UTF-8';
+
+                        $mail->setFrom('pijamas.shalom.notificaciones@gmail.com', TITLE);
+                        $mail->addAddress($correo);
+
+                        $mail->isHTML(true);
+                        $mail->Subject = 'Recuperación de Contraseña - ' . TITLE;
+                        $mail->Body    = 'Para recuperar tu contraseña, haz clic en el siguiente enlace: <a href="' . BASE_URL . '?resetToken=' . $token . '">Recuperar Contraseña</a>';
+                        $mail->AltBody = 'Para recuperar tu contraseña, visita: ' . BASE_URL . '?resetToken=' . $token;
+
+                        $mail->send();
+                        $mensaje = array('msg' => 'Correo enviado. Revisa tu bandeja de entrada.', 'icono' => 'success');
+                    } catch (Exception $e) {
+                        $mensaje = array('msg' => 'Error al enviar correo: ' . $mail->ErrorInfo, 'icono' => 'error');
+                    }
+                } else {
+                    $mensaje = array('msg' => 'Error al actualizar el token.', 'icono' => 'error');
+                }
+            } else {
+                $mensaje = array('msg' => 'El correo no existe.', 'icono' => 'warning');
+            }
+        } else {
+            $mensaje = array('msg' => 'El correo es requerido.', 'icono' => 'warning');
+        }
+        echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    // Permite al cliente restablecer su contraseña usando el token recibido por correo
+    public function resetPassword($token){
+        $cliente = $this->model->getClienteByToken($token);
+        if (empty($cliente)) {
+            header('Location: ' . BASE_URL . '?msg=token_invalido');
+            exit;
+        }
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (empty($_POST['new_password']) || empty($_POST['confirm_password'])) {
+                $mensaje = array('msg' => 'Todos los campos son requeridos.', 'icono' => 'warning');
+                echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+                die();
+            }
+            $newPassword = $_POST['new_password'];
+            $confirmPassword = $_POST['confirm_password'];
+            if ($newPassword !== $confirmPassword) {
+                $mensaje = array('msg' => 'Las contraseñas no coinciden.', 'icono' => 'warning');
+                echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+                die();
+            }
+            $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $update = $this->model->updatePassword($cliente['correo'], $hash);
+            if ($update) {
+                $this->model->clearToken($cliente['correo']);
+                $mensaje = array('msg' => 'Contraseña actualizada', 'icono' => 'success');
+            } else {
+                $mensaje = array('msg' => 'Error al actualizar la contraseña. Inténtalo de nuevo.', 'icono' => 'error');
+            }
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        } else {
+            $mensaje = array('msg' => 'Método no permitido', 'icono' => 'error');
+            echo json_encode($mensaje, JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+
     //registrar pedidos realizados por un cliente
     public function registrarPedido()
     {
@@ -142,20 +231,11 @@ class Clientes extends Controller
         $pedidos = $json['pedidos'];
         $productos = $json['productos'];
         $total = $json['pedidos']['total'];
-        if (is_array($pedidos) && is_array($productos)) {
-            
-            //$monto = 0.00; // Inicializa el monto del pedido
 
-            // Calcular el monto total del pedido
-            // foreach ($productos as $producto) {
-            //     $monto += $producto['precio'] * $producto['cantidad'];
-            // }
+        if (is_array($pedidos) && is_array($productos)) {
 
             $monto = $total; // Total del pedido calculado en el frontend
-
-
             $id_transaccion = uniqid();
-            // $monto = $pedidos['purchase_units'][0]['amount']['value'];
             $estado = "COMPLETED";
             $fecha = date('Y-m-d H:i:s');
             $email = $_SESSION['correoCliente'];
@@ -170,10 +250,11 @@ class Clientes extends Controller
                 $nombre,
                 $id_cliente
             );
+        
             if ($data > 0) {
                 foreach ($productos as $producto) {
                     $temp = $this->model->getProducto($producto['idProducto']);
-                    $this->model->registrarDetalle($temp['nombre'], $temp['precio'], $producto['cantidad'], $data, $producto['idProducto']);
+                    $this->model->registrarDetalle($temp['nombre'], ($temp['precio']), $producto['cantidad'], $data, $producto['idProducto']);
                 }
                 $mensaje = array('msg' => 'pedido registrado', 'icono' => 'success');
             } else {

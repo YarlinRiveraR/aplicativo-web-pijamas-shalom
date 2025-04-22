@@ -10,6 +10,7 @@
     Tienda | Online
   </title>
   <!--     Fonts and icons     -->
+  <!-- NEW!!! -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
@@ -97,6 +98,9 @@
           </a>
         </li>
       </ul>
+    </div>
+    <div class="footer_logo" style="text-align: center;">
+        <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo">
     </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">

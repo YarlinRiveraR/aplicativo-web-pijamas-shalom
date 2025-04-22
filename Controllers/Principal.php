@@ -1,4 +1,7 @@
 <?php
+
+require_once 'Config/Helpers/currency_helper.php';
+
 class Principal extends Controller
 {
     public function __construct() {
@@ -11,23 +14,27 @@ class Principal extends Controller
         $datos = file_get_contents('php://input');
         $json = json_decode($datos, true);
         $array['productos'] = array();
-        $total = 0.00;
+        //NEW!!!
+        $total = 0;
         if (!empty($json)) {
             foreach ($json as $producto) {
                 $result = $this->model->getProducto($producto['idProducto']);
                 $data['id'] = $result['id'];
                 $data['nombre'] = $result['nombre'];
-                $data['precio'] = $result['precio'];
+                //NEW!!!
+                $data['precio'] = ($result['precio']);
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
                 $subTotal = $result['precio'] * $producto['cantidad'];
-                $data['subTotal'] = number_format($subTotal, 2);
+                //NEW!!!
+                $data['subTotal'] = ($subTotal);
                 array_push($array['productos'], $data);
                 $total += $subTotal;
             }
-        }        
-        $array['total'] = number_format($total, 2);
-        $array['totalPaypal'] = number_format($total, 2, '.', '');
+        }  
+        //NEW!!!      
+        $array['total'] = ($total);
+        //NEW!!! REVISAR!!!
         $array['moneda'] = MONEDA;
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
@@ -53,6 +60,36 @@ class Principal extends Controller
         $data['total'] = ceil($total['total'] / $porPagina);
         $this->views->getView('principal', "shop", $data);
     }
+
+    //NEW!!!
+    //vista lista deseos
+    public function deseo()
+    {
+        $data['title'] = 'Tu lista de deseo';
+        $this->views->getView('principal', "deseo", $data);
+    }
+
+    //obtener producto a partir de la lista de deseo
+    public function listaDeseo()
+    {
+        $datos = file_get_contents('php://input');
+        $json =json_decode($datos, true);
+        $array['productos'] = array();
+        foreach ($json as $producto) {
+            $result = $this->model->getListaDeseo($producto['idProducto']);
+            $data['id'] = $result['id'];
+            $data['nombre'] = $result['nombre'];
+            $data['precio'] = ($result['precio']);
+            $data['talla'] = isset($producto['talla']) ? $producto['talla'] : null;
+            $data['cantidad'] = $producto['cantidad'];
+            $data['imagen'] = $result['imagen'];
+            array_push($array['productos'], $data);
+        }
+        $array['moneda'] = MONEDA;
+        echo json_encode($array, JSON_UNESCAPED_UNICODE);
+        die();
+    }
+
     //vista detail
     public function detail($id_producto)
     {
@@ -60,7 +97,7 @@ class Principal extends Controller
         $id_categoria = $data['producto']['id_categoria'];
         $data['relacionados'] = $this->model->getAleatorios($id_categoria, $data['producto']['id']);
         $data['title'] = $data['producto']['nombre'];
-       $data['tallas'] = $this->model->obtenerTallasPorProducto($id_producto);
+        $data['tallas'] = $this->model->obtenerTallasPorProducto($id_producto);
         $this->views->getView('principal', "detail", $data);
         
     }

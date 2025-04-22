@@ -1,11 +1,12 @@
+<!-- NEW!!! -->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- <link rel="apple-touch-icon" sizes="76x76" href="?php echo BASE_URL; ?>assets/admin/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="?php echo BASE_URL; ?>assets/admin/img/favicon.png"> -->
+  <link rel="apple-touch-icon" sizes="76x76" href="<?php echo BASE_URL; ?>assets/admin/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="<?php echo BASE_URL; ?>assets/admin/img/favicon.png">
   <title>
     <?php echo $data['title']; ?>
   </title>
@@ -49,21 +50,16 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start" id="formulario" autocomplete="off">
+                <form method="post" action="<?php echo BASE_URL?>admin/sendRecovery" role="form" class="text-start" id="frmRecovery" autocomplete="off">
                   <div class="input-group input-group-outline my-3">
-                    <label class="form-label">Correo</label>
-                    <input type="email" id="email" name="email" class="form-control">
-                  </div>
-                  <div class="input-group input-group-outline mb-3">
-                    <label class="form-label">Contraseña</label>
-                    <input type="password" id="clave" name="clave" class="form-control">
+                    <label for="email" class="form-label">Correo</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Iniciar</button>
+                    <button type="submit" class="btn bg-gradient-primary w-100 my-4 mb-2">Recuperar contraseña</button>
                   </div>
-                  <!-- NEW!!! -->
-                  <div class="text-center">
-                    <a href="<?php echo BASE_URL . 'admin/recovery'; ?>">¿Olvidaste tu contraseña?</a>
+                  <div class="text-center mt-3">
+                    <a href="<?php echo BASE_URL . 'admin/home'; ?>">Volver al inicio de sesión</a>
                   </div>
                 </form>
               </div>
@@ -84,8 +80,7 @@
               </div>
             </div>
             <div class="col-auto">
-            <div class="footer_logo">
-                <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo">
+              
             </div>
           </div>
         </div>
@@ -114,7 +109,7 @@
     const base_url = '<?php echo BASE_URL; ?>';
   </script>
   <script src="<?php echo BASE_URL; ?>assets/js/sweetalert2.all.min.js"></script>
-  <script src="<?php echo BASE_URL; ?>assets/js/modulos/login.js"></script>
+  <script src="<?php echo BASE_URL . 'assets/js/modulos/recovery.js'; ?>"></script>
 </body>
 
 </html>

@@ -6,8 +6,8 @@
       <div class="col-md-4">
         <h5>Shalom Pijamas</h5>
         <p><i class="fas fa-map-marker-alt"></i> Calle 4N #7E-30 Los Pinos</p>
-        <p><i class="fas fa-phone"></i> +57 300 4413069</p>
-        <p><i class="fas fa-envelope"></i> Jperez540@misena.edu.co</p>
+        <p><i class="fas fa-phone"></i> +57 313 8284564</p>
+        <p><i class="fas fa-envelope"></i> yacquelinepa6045@gmail.com</p>
       </div>
 
       <!-- Enlaces de Colecciones -->
@@ -27,8 +27,12 @@
     <!-- Divisoria -->
     <hr class="social_divider">
 
-    <div class="footer_content text-center">
-      <p class="copyright_text mb-0">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS</p>
+    <div class="footer_content d-flex align-items-center justify-content-start">
+    <!-- Logo -->
+      <div class="footer_logo">
+        <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo" width="70">
+      </div>
+      <p class="copyright_text mb-0 ml-3">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS<a href="#"></a></p>
     </div>
   </div>
 </div>
@@ -80,6 +84,10 @@
   .footer_content {
     margin-top: 20px;
   }
+  .footer_logo img {
+    width: 200px;
+    height: auto;
+  }  
 </style>
 
 
@@ -128,7 +136,7 @@
 
 <!-- Botón de WhatsApp -->
 <div id="whatsapp-button">
-  <a href="https://wa.me/+573004413069?text=¡Chatea Conmigo!" target="_blank">
+  <a href="https://wa.me/573138284564?text=¡Chatea Conmigo!" target="_blank">
     <img src="<?php echo BASE_URL . 'assets/images/whatsapp.jpg'; ?>">
       </a>
 </div>
@@ -172,9 +180,12 @@
             </div>
             <div class="form-group mb-3">
               <label for="claveLogin"><i class="fas fa-key"></i> Contraseña</label>
-              <input id="claveLogin" class="form-control" type="text" name="claveLogin" placeholder="Contraseña">
+              <input id="claveLogin" class="form-control" type="password" name="claveLogin" placeholder="Contraseña">
             </div>
-            <a href="#" id="btnRegister">Todavia no tienes una cuenta?</a>
+            <a href="#" id="btnRegister">¿Todavia no tienes una cuenta?</a>
+            <div class="text-left">
+              <a href="#" id="btnForgot">Olvidaste tu contraseña</a>
+            </div>
             <div class="float-right">
               <button class="btn btn-primary" type="button" id="login">Login</button>
             </div>
@@ -191,13 +202,40 @@
             </div>
             <div class="form-group mb-3">
               <label for="claveRegistro"><i class="fas fa-key"></i> Contraseña</label>
-              <input id="claveRegistro" class="form-control" type="text" name="claveRegistro" placeholder="Contraseña">
+              <input id="claveRegistro" class="form-control" type="password" name="claveRegistro" placeholder="Contraseña">
             </div>
-            <a href="#" id="btnLogin">Ya tienes una cuenta?</a>
+            <a href="#" id="btnLogin">¿Ya tienes una cuenta?</a>
             <div class="float-right">
               <button class="btn btn-primary" type="button" id="registrarse">Registrarse</button>
             </div>
           </div>
+          <!-- NEW!!! -->
+          <!-- formulario de solicitud de recuperación (enviar correo) -->
+          <div class="col-md-12 d-none" id="frmRecuperarPass">            
+            <div class="form-group mb-3">
+              <label for="correoRecuperar"><i class="fas fa-envelope"></i> Correo</label>
+              <input id="correoRecuperar" class="form-control" type="email" name="correoRecuperar" placeholder="Correo Electrónico">
+            </div>            
+            <a href="#" id="btnVolverLogin">Volver al incio de sesión</a>
+            <div class="float-right">
+              <button class="btn btn-primary" type="button" id="btnRecuperar">Recuperar contraseña</button>
+            </div>
+          </div>
+          <!-- formulario de restablecimiento de nueva contraseña -->
+          <div class="col-md-12 d-none" id="frmRecuperarNewPass">            
+            <div class="form-group mb-3">
+              <label for="new_password"><i class="fas fa-key"></i> Nueva Contraseña</label>
+              <input id="new_password" class="form-control" type="password" name="new_password" placeholder="Nueva Contraseña">
+            </div>
+            <div class="form-group mb-3">
+              <label for="confirm_password"><i class="fas fa-key"></i> Confirmar Nueva Contraseña</label>
+              <input id="confirm_password" class="form-control" type="password" name="confirm_password" placeholder="Confirmar Nueva Contraseña">
+            </div>
+            <div class="float-right">
+              <button class="btn btn-primary" type="button" id="btnRecuperarNew">Restablecer Contraseña</button>
+            </div>
+          </div>
+
         </div>
       </div>
 

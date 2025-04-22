@@ -21,14 +21,16 @@
               <!-- <div class="btn_main"> -->
                   <div class="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
                     <ul class="list-unstyled">
-                      <li><a class="btn btn-success text-white mt-2" href="<?php echo BASE_URL . 'principal/detail/' . $producto['id']; ?>"><i class="fas fa-eye"></i></a></li>
+                      <li><a class="btn btn-success text-white mt-2" href="<?php echo BASE_URL . 'principal/detail/' . $producto['id']; ?>">
+                        <i class="fas fa-eye"></i></a>
+                    </li>
                     </ul>
                   </div>
               <!-- </div> -->
             </div>
             <div class="box_main card-body">
               <h4 class="shirt_text"><?php echo $producto['nombre']; ?></h4>
-              <p class="text-center mb-0"><span style="color: #262626;">$ <?php echo $producto['precio'] . ' ' . MONEDA; ?></span></p>
+              <p class="text-center mb-0"><span style="color: #262626;">$ <?php echo number_format($producto['precio'], 0, '', '.') . ' ' . MONEDA; ?></span></p>
             </div>
           </div>
           </div>
@@ -92,6 +94,7 @@
 
 
 <?php include_once 'Views/template/footer-principal.php'; ?>
+<script src="<?php echo BASE_URL . 'assets/js/helper.js'; ?>"></script>
 
 <script>
   $('.multiple-items').slick({
