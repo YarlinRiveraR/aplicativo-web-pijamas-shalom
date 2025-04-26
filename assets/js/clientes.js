@@ -1,6 +1,5 @@
 const tableLista = document.querySelector("#tableListaProductos tbody");
 const tblPendientes = document.querySelector('#tblPendientes');
-const btnFinalizarPago = document.querySelector("#btnFinalizarPago");
 let productosjson = [];
 const estadoEnviado = document.querySelector('#estadoEnviado');
 const estadoProceso = document.querySelector('#estadoProceso');
@@ -28,86 +27,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
-function generarMensajeCarrito() {
-    const listaCarrito = JSON.parse(localStorage.getItem('listaCarrito')) || [];
-    if (listaCarrito.length === 0) {
-        Swal.fire("Aviso", "El carrito está vacío.", "warning");
-        return;
-    }
-
-    const url = base_url + 'principal/listaProductos';
-    const http = new XMLHttpRequest();
-    http.open('POST', url, true);
-    http.setRequestHeader('Content-Type', 'application/json');
-    
-    http.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            let mensaje = "Hola! 👋\n\n";
-            mensaje += "Quiero confirmar mi pedido:\n\n";
-
-            for (let i = 0; i < res.productos.length; i++) {
-                const producto = res.productos[i];
-                mensaje += `${i + 1}. ${producto.nombre}\n`;
-                mensaje += `Cantidad: ${producto.cantidad}\n`;
-                mensaje += `Talla: ${listaCarrito[i].talla}\n`;
-                mensaje += `Precio: ${producto.precio} ${res.moneda}\n\n`;
-            }
-            mensaje += `Total a pagar: ${res.total} ${res.moneda}\n\n`;
-            mensaje += "¿Cuál es el siguiente paso? Por favor, indícame qué métodos de pago aceptan. ¡Gracias! 😊";
-            
-            // Reemplazar saltos de línea con %0A para WhatsApp
-            mensaje = mensaje.replace(/\n/g, '%0A');
-
-            // Eliminar cualquier espacio en el número de teléfono
-            let telefono = "+573138284564".replace(/\s+/g, '');
-            
-            // Probar primero con el protocolo de aplicación (más confiable en móviles)
-            let urlWhatsApp = `whatsapp://send/?phone=${telefono}&text=${mensaje}`;
-            
-            // Como alternativa, también podemos intentar con la URL web
-            let urlWhatsAppWeb = `https://web.whatsapp.com/send?phone=${telefono}&text=${mensaje}`;
-            
-            // En dispositivos móviles, preferir la aplicación; en desktop, preferir la web
-            if (/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent)) {
-                window.location.href = urlWhatsApp;
-            } else {
-                window.open(urlWhatsAppWeb, '_blank');
-            }
-        } else if (this.readyState == 4) {
-            // Manejar error en la solicitud
-            Swal.fire("Error", "No se pudo generar el mensaje del carrito", "error");
-        }
-    };
-    
-    // Enviar la solicitud después de configurar el callback
-    http.send(JSON.stringify(listaCarrito));
-}
-
-btnFinalizarPago.addEventListener('click', function() {
-    const carrito = localStorage.getItem('listaCarrito') ? JSON.parse(localStorage.getItem('listaCarrito')) : [];
-    if (carrito.length === 0) {
-        Swal.fire('Aviso?', 'El carrito está vacío. Agrega al menos un producto antes de finalizar tu pedido.', 'warning');
-        return;
-    }
-
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "Este proceso es irreversible",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, confirmar',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            generarMensajeCarrito();
-            registrarPedido();
-        }
-    });
-});
-
 function getListaProductos() {
     const miTalla = JSON.parse(localStorage.getItem('listaCarrito'));
     let html = '';
@@ -118,7 +37,7 @@ function getListaProductos() {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             const res = JSON.parse(this.responseText);
-            if (res.total > 0) {
+            if (res.totalPaypal > 0) {
                 // Reemplazar el forEach con un bucle for
                 for (let i = 0; i < res.productos.length; i++) {
                     const producto = res.productos[i];
@@ -137,53 +56,13 @@ function getListaProductos() {
                 
                 tableLista.innerHTML = html;
                 document.querySelector('#totalProducto').textContent = 'TOTAL A PAGAR: ' + res.total + ' ' + res.moneda;
+                botonEpayco(res.total, 'COP');
             } else {
                 tableLista.innerHTML = `
                 <tr>
                     <td colspan="6" class="text-center">CARRITO VACIO</td>
                 </tr>
                 `;
-            }
-        }
-    }
-}
-
-
-
-function registrarPedido() {
-    const url = base_url + 'clientes/registrarPedido';
-    const http = new XMLHttpRequest();
-    http.open('POST', url, true);
-
-    // Obtener la lista de productos y el total
-    const listaCarrito = JSON.parse(localStorage.getItem('listaCarrito')) || [];
-    const httpListaProductos = new XMLHttpRequest();
-    httpListaProductos.open('POST', base_url + 'principal/listaProductos', true);
-    httpListaProductos.setRequestHeader('Content-Type', 'application/json');
-    httpListaProductos.send(JSON.stringify(listaCarrito));
-
-    httpListaProductos.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
-            http.send(JSON.stringify({
-                pedidos: {
-                    total: res.total
-                },
-                productos: listaCarrito
-            }));
-
-            http.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log(this.responseText);
-                    const res = JSON.parse(this.responseText);
-                    Swal.fire("Aviso?", res.msg, res.icono);
-                    if (res.icono == 'success') {
-                        localStorage.removeItem('listaCarrito');
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 2000);
-                    }
-                }
             }
         }
     }
@@ -213,8 +92,8 @@ function verPedido(idPedido) {
             }
             res.productos.forEach(row => {
                 let subTotal = parseFloat(row.precio) * parseInt(row.cantidad);
-                let precioFormato = (parseFloat(row.precio));
-                let subTotalFormato = (subTotal);
+                let precioFormato = formatearPeso(parseFloat(row.precio));
+                let subTotalFormato = formatearPeso(subTotal);
                 html += `<tr>
                     <td>${row.producto}</td>
                     <td><span class="badge bg-warning">${res.moneda + ' ' + precioFormato}</span></td>
@@ -229,38 +108,33 @@ function verPedido(idPedido) {
 
 }
 
-// function calcularTotalCarrito() {
-//     const listaCarrito = JSON.parse(localStorage.getItem('listaCarrito')) || [];
-//     let total = 0;
+function botonEpayco(total, moneda) {
+    const contenedor = document.getElementById('epayco-button-container');
 
-//     listaCarrito.forEach(item => {
-//         const subtotal = item.cantidad * item.precio;
-//         total += subtotal;
-//     });
+    const urlResponse = base_url + "Views/principal/epayco/respuesta.php";
+    const urlConfirmation = base_url + "Views/principal/epayco/confirmacion.php";
 
-//     return total;
+    contenedor.innerHTML = `
+      <epayco-button
+          class="epayco-button"
+          data-epayco-key="5b2e50243b90c07a57848c396e20afdb" 
+          data-epayco-private-key="08d590039c53b1481b1b259b4adf962f"
+          data-epayco-amount="${total}"
+          data-epayco-tax-base="0"
+          data-epayco-tax="0"
+          data-epayco-name="Compra en Shalom Pijamas"
+          data-epayco-description="Compra de productos en Shalom Pijamas"
+          data-epayco-currency="${moneda}"
+          data-epayco-button="Pagar con ePayco"
+          data-epayco-country="co"
+          data-epayco-test="true" 
+          data-epayco-external="false"
+          data-epayco-response="${urlResponse}"
+          data-epayco-confirmation="${urlConfirmation}">
+      </epayco-button>
+    `;
 
-    
-
-//     // const url = base_url + 'principal/listaProductos';
-//     // const http = new XMLHttpRequest();
-//     // http.open('POST', url, true);
-//     // http.setRequestHeader('Content-Type', 'application/json');
-//     // http.send(JSON.stringify(listaCarrito));
-
-//     // http.onreadystatechange = function () {
-//     //     if (this.readyState == 4 && this.status == 200) {
-//     //         const res = JSON.parse(this.responseText);
-//     //         mensaje += res.total;
-//     //     }
-//     // }
-
-// }
-
-
-// sb-j6jdb7896999@personal.example.com
-// e8O2lR-I
-
-
-//sb-y3jfn7901325@business.example.com
-//Amqes3]/
+    const scriptEl = document.createElement('script');
+    scriptEl.src = "https://checkout.epayco.co/checkout.js";
+    document.body.appendChild(scriptEl);
+}

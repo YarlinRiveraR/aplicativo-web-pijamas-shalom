@@ -48,10 +48,26 @@
                                         <p><?php echo $_SESSION['nombreCliente']; ?></p>
                                         <p><i class="fas fa-envelope"></i> <?php echo $_SESSION['correoCliente']; ?></p>
                                         
-                                        <div class="flex-column-perfil">
-                                            <button class="btn btn-success" id="btnFinalizarPago">
-                                                <i class="fab fa-whatsapp"></i> Completa tu pedido acá
-                                            </button>                                                                    
+                                        <div id="accordionExample">
+                                            <div class="card">
+                                                <div class="card-header" id="headingTwo">
+                                                <h2 class="mb-0">
+                                                    <button class="btn btn-link btn-block text-left" type="button"
+                                                            data-toggle="collapse" data-target="#collapseTwo"
+                                                            aria-expanded="true" aria-controls="collapseTwo">
+                                                    Pagar con ePayco
+                                                    </button>
+                                                </h2>
+                                                </div>
+                                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                                <div class="card-body text-center" id="epayco-button-container">
+                                                    <!-- Tu botón ePayco se inyectará aquí -->
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="flex-column-perfil">                                                                
                                             <a class="btn btn-danger" href="<?php echo BASE_URL . 'clientes/salir'; ?>"><i class="fas fa-times-circle"></i> Cerrar Sesión</a>
                                         </div>
                                     </div>

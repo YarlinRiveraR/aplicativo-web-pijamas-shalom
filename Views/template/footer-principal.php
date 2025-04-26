@@ -30,12 +30,8 @@
     <!-- Divisoria -->
     <hr class="social_divider">
 
-    <div class="footer_content d-flex align-items-center justify-content-start">
-    <!-- Logo -->
-      <div class="footer_logo">
-        <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo" width="70">
-      </div>
-      <p class="copyright_text mb-0 ml-3">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS<a href="#"></a></p>
+    <div class="footer_content text-center">
+      <p class="copyright_text mb-0">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS</p>
     </div>
   </div>
 </div>
@@ -87,11 +83,6 @@
   .footer_content {
     margin-top: 20px;
   }
-  
-  .footer_logo img {
-    width: 200px;
-    height: auto;
-  }  
 </style>
 
 
@@ -138,31 +129,6 @@
   </div>
 </div>
 
-<!-- Botón de WhatsApp -->
-<div id="whatsapp-button">
-  <a href="https://wa.me/573138284564?text=¡Chatea Conmigo!" target="_blank">
-    <img src="<?php echo BASE_URL . 'assets/images/whatsapp.jpg'; ?>">
-      </a>
-</div>
-<style>
-  #whatsapp-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-  }
-
-  #whatsapp-button img {
-    width: 70px;
-    /* Ajusta el tamaño del icono según sea necesario */
-    height: 70px;
-    border-radius: 50%;
-    /* Hace el icono circular, si el icono es cuadrado */
-  }
-</style>
-
-
-
 
 <!-- Login directo -->
 
@@ -177,7 +143,7 @@
       </div>
       <div class="modal-body m-3">
         <div class="row">
-          <!-- Formulario de Login -->
+
           <div class="col-md-12" id="frmLogin">
             <div class="form-group mb-3">
               <label for="correoLogin"><i class="fas fa-envelope"></i> Correo</label>
@@ -189,7 +155,7 @@
             </div>
             <a href="#" id="btnRegister">¿Todavia no tienes una cuenta?</a>
             <div class="text-left">
-              <a href="#" id="btnForgot">Olvidaste tu contraseña</a>
+              <a href="#" id="btnForgot">¿Olvidaste tu contraseña?</a>
             </div>
             <div class="float-right">
               <button class="btn btn-primary" type="button" id="login">Login</button>

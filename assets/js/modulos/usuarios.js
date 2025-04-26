@@ -91,23 +91,14 @@ function editUser(idUser) {
             console.log(this.responseText);
             const res = JSON.parse(this.responseText);
             document.querySelector('#id').value = res.id;
-            
-            const nombreInput = document.querySelector('#nombre');
-            const apellidoInput = document.querySelector('#apellido');
-            const correoInput = document.querySelector('#correo');
-            
-            nombreInput.parentElement.classList.add('is-filled', 'focused');
-            apellidoInput.parentElement.classList.add('is-filled', 'focused');
-            correoInput.parentElement.classList.add('is-filled', 'focused');
-            
-            nombreInput.value = res.nombres;
-            apellidoInput.value = res.apellidos;
-            correoInput.value = res.correo;
-        
-            document.querySelector('#clave').setAttribute('readonly', 'readonly');            
+            document.querySelector('#nombre').value = res.nombres;
+            document.querySelector('#apellido').value = res.apellidos;
+            document.querySelector('#correo').value = res.correo;
+            document.querySelector('#clave').setAttribute('readonly', 'readonly');
             btnAccion.textContent = 'Actualizar';
             titleModal.textContent = "MODIFICAR USUARIO";
             myModal.show();
+            //$('#nuevoModal').modal('show');
         }
     }
 }

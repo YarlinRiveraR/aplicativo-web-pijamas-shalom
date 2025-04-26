@@ -99,9 +99,6 @@
         </li>
       </ul>
     </div>
-    <div class="footer_logo" style="text-align: center;">
-        <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo">
-    </div>
   </aside>
   <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <!-- Navbar -->

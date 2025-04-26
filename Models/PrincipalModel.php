@@ -56,6 +56,6 @@ class PrincipalModel extends Query {
         $query = $this->con->prepare($sql);
         $query->execute([$producto_id]);
         return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
+        }
     }
 ?>

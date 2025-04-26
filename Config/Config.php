@@ -1,5 +1,5 @@
 <?php
-const BASE_URL = "http://localhost/aplicativo-web-pijamas-shalom - copia/";
+const BASE_URL = "http://localhost/aplicativoShalom-main/";
 const HOST = "localhost";
 const USER = "root";
 const PASS = "";
