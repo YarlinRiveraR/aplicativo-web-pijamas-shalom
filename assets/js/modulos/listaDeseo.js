@@ -28,7 +28,7 @@ function getListaDeseo() {
                     <span class="text-white badge bg-primary">${producto.cantidad}</span>
                     </td>
                     <td>
-                    <button class="btn btn-danger btnEliminarDeseo me-4" type="button" prod="${producto.id}"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger btnEliminarDeseo" type="button" prod="${producto.id}"><i class="fas fa-trash"></i></button>
                     <button class="btn btn-primary btnAddCart" type="button" prod="${producto.id}"><i class="fas fa-cart-plus"></i></button>
                     </td>
                 </tr>`;
@@ -50,6 +50,7 @@ function btnEliminarDeseo() {
     }
 }
 
+//eliminar productos desde la lista de deseos
 function eliminarListaDeseo(idProducto, mostrarAlerta = true) {
     for (let i = 0; i < listaDeseo.length; i++) {
         if (listaDeseo[i]['idProducto'] == idProducto) {

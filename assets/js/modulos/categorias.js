@@ -88,14 +88,21 @@ function editCat(idCat) {
     http.send();
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            const res = JSON.parse(this.responseText);
+            const res = JSON.parse(this.responseText);            
             document.querySelector('#id').value = res.id;
-            document.querySelector('#categoria').value = res.categoria;
-            document.querySelector('#descripcion').value = res.descripcion;
+            
+            const categoriaInput = document.querySelector('#categoria');
+            const descripcionInput = document.querySelector('#descripcion');
+            
+            categoriaInput.parentElement.classList.add('is-filled', 'focused');
+            descripcionInput.parentElement.classList.add('is-filled', 'focused');
+            
+            categoriaInput.value = res.categoria;
+            descripcionInput.value = res.descripcion;
+            
             btnAccion.textContent = 'Actualizar';
             titleModal.textContent = "MODIFICAR CATEGORIA";
             myModal.show();
-            //$('#nuevoModal').modal('show');
         }
     }
 }

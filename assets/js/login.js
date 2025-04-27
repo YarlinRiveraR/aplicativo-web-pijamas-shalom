@@ -129,6 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+// Detectar si existe ?resetToken=... en la URL
 const urlParams = new URLSearchParams(window.location.search);
 const resetToken = urlParams.get('resetToken');
 if (resetToken) {
@@ -174,6 +175,16 @@ if (resetToken) {
     }
   });
 
+  // Función para obtener el token desde la URL
+// function getTokenFromUrl() {
+//   const urlParts = window.location.pathname.split('/');
+//   return urlParts[urlParts.length - 1];
+// }
+
+// // Ahora usas "token" en tu solicitud AJAX al resetear la contraseña
+// const token = getTokenFromUrl();
+
+
   //busqueda de productos
   inputBusqueda.addEventListener("keyup", function (e) {
     if (e.target.value != "") {
@@ -187,18 +198,21 @@ if (resetToken) {
           let html = "";
           res.forEach((producto) => {
             //NEW!!!
-            let precioFormateado = formatearPeso(parseFloat(producto.precio));
+            //let precioFormateado = formatearPeso(parseFloat(producto.precio));
+            let rutaImagen = base_url + producto.imagen;
             html += `<div class="col-12 col-md-4 mb-4">
                     <div class="card h-100">
                       <a href="#">
-                        <img src="${producto.imagen}" class="card-img-top" alt="${producto.nombre}">
+                        <img src="${rutaImagen}" class="card-img-top" alt="${producto.nombre}">
                       </a>
                       <div class="card-body">
                         <a href="#" class="h2 text-decoration-none text-dark">${producto.nombre}</a>
                         <p class="card-text">
-                        ${precioFormateado}
+                        ${producto.precio}
                         </p>
-                        <div class="buy_bt"><a href="#" onclick="agregarCarrito(${producto.id}, 1)">Añadir</a></div>
+                        <div class="buy_bt">
+                          <a href="${base_url}principal/detail/${producto.id}">Ver detalle</a>
+                        </div>
                       </div>
                     </div>
                   </div>`;

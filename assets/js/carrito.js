@@ -64,7 +64,7 @@ function agregarDeseo(idProducto, talla) {
         talla: talla,
     });
     localStorage.setItem('listaDeseo', JSON.stringify(listaDeseo));
-    alertaPerzanalizada('Aviso?', 'PRODUCTO AGREGADO A LA LISTA DE DESEOS', 'success');
+    Swal.fire('Aviso?', 'PRODUCTO AGREGADO A LA LISTA DE DESEOS', 'success');
     cantidadDeseo();
 }
 
@@ -150,7 +150,7 @@ function getListaCarrito() {
             }
 
             tableListaCarrito.innerHTML = html;
-            document.querySelector('#totalGeneral').textContent = res.total + ' ' + res.moneda;
+            document.querySelector('#totalGeneral').textContent = 'Total: ' + res.total + ' ' + res.moneda;
             btnEliminarCarrito();
             cambiarCantidad();
         }

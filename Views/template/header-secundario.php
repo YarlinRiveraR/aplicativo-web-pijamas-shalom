@@ -61,7 +61,6 @@
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
    <!-- <script src="https://www.paypal.com/sdk/js?client-id=?php echo CLIENT_ID; ?>&currency=?php echo MONEDA; ?>"></script> -->
-   <script type="text/javascript" src="https://checkout.epayco.co/checkout.js"></script>
    <style>
       .table>tbody>tr>td {
          vertical-align: middle;
@@ -121,6 +120,7 @@
 
                <div class="main">
                   <!-- Another variation with a button -->
+                  <div class="search-container">
                   <div class="input-group">
                      <input type="text" class="form-control" placeholder="¿Qué estas buscando?" id="search">
 
@@ -131,6 +131,7 @@
                      </div>
                   </div>
                   <div class="position-absolute row" id="resultBusqueda" style="z-index: 99999;"></div>
+               </div>
                </div>
                <div class="header_box">
                   <div class="login_menu">

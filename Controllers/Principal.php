@@ -22,19 +22,19 @@ class Principal extends Controller
                 $data['id'] = $result['id'];
                 $data['nombre'] = $result['nombre'];
                 //NEW!!!
-                $data['precio'] = formatearMoneda($result['precio']);
+                $data['precio'] = ($result['precio']);
                 $data['cantidad'] = $producto['cantidad'];
                 $data['imagen'] = $result['imagen'];
                 $subTotal = $result['precio'] * $producto['cantidad'];
                 //NEW!!!
-                $data['subTotal'] = formatearMoneda($subTotal);
+                $data['subTotal'] = ($subTotal);
                 array_push($array['productos'], $data);
                 $total += $subTotal;
             }
         }  
         //NEW!!!      
-        $array['total'] = number_format($total, 2, '.', ''); 
-        $array['totalPaypal'] = number_format($total, 2, '.', '');
+        $array['total'] = ($total);
+        //NEW!!! REVISAR!!!
         $array['moneda'] = MONEDA;
         echo json_encode($array, JSON_UNESCAPED_UNICODE);
         die();
@@ -79,7 +79,7 @@ class Principal extends Controller
             $result = $this->model->getListaDeseo($producto['idProducto']);
             $data['id'] = $result['id'];
             $data['nombre'] = $result['nombre'];
-            $data['precio'] = formatearMoneda($result['precio']);
+            $data['precio'] = ($result['precio']);
             $data['talla'] = isset($producto['talla']) ? $producto['talla'] : null;
             $data['cantidad'] = $producto['cantidad'];
             $data['imagen'] = $result['imagen'];

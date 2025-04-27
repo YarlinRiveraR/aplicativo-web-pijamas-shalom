@@ -27,8 +27,12 @@
     <!-- Divisoria -->
     <hr class="social_divider">
 
-    <div class="footer_content text-center">
-      <p class="copyright_text mb-0">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS</p>
+    <div class="footer_content d-flex align-items-center justify-content-start">
+    <!-- Logo -->
+      <div class="footer_logo">
+        <img src="<?php echo BASE_URL . 'assets/images/logo_sistemas.jpg'; ?>" alt="Logo" width="70">
+      </div>
+      <p class="copyright_text mb-0 ml-3">Shalompijamas © <?php echo date('Y'); ?> TODOS LOS DERECHOS RESERVADOS<a href="#"></a></p>
     </div>
   </div>
 </div>
@@ -80,6 +84,10 @@
   .footer_content {
     margin-top: 20px;
   }
+  .footer_logo img {
+    width: 200px;
+    height: auto;
+  }  
 </style>
 
 
@@ -126,6 +134,31 @@
   </div>
 </div>
 
+<!-- Botón de WhatsApp -->
+<div id="whatsapp-button">
+  <a href="https://wa.me/573138284564?text=¡Chatea Conmigo!" target="_blank">
+    <img src="<?php echo BASE_URL . 'assets/images/whatsapp.jpg'; ?>">
+      </a>
+</div>
+<style>
+  #whatsapp-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+
+  #whatsapp-button img {
+    width: 70px;
+    /* Ajusta el tamaño del icono según sea necesario */
+    height: 70px;
+    border-radius: 50%;
+    /* Hace el icono circular, si el icono es cuadrado */
+  }
+</style>
+
+
+
 
 <!-- Login directo -->
 
@@ -140,7 +173,7 @@
       </div>
       <div class="modal-body m-3">
         <div class="row">
-        <div class="col-md-12" id="frmLogin">
+          <div class="col-md-12" id="frmLogin">
             <div class="form-group mb-3">
               <label for="correoLogin"><i class="fas fa-envelope"></i> Correo</label>
               <input id="correoLogin" class="form-control" type="text" name="correoLogin" placeholder="Correo Electrónico">
@@ -151,7 +184,7 @@
             </div>
             <a href="#" id="btnRegister">¿Todavia no tienes una cuenta?</a>
             <div class="text-left">
-              <a href="#" id="btnForgot">¿Olvidaste tu contraseña?</a>
+              <a href="#" id="btnForgot">Olvidaste tu contraseña</a>
             </div>
             <div class="float-right">
               <button class="btn btn-primary" type="button" id="login">Login</button>
@@ -171,11 +204,12 @@
               <label for="claveRegistro"><i class="fas fa-key"></i> Contraseña</label>
               <input id="claveRegistro" class="form-control" type="password" name="claveRegistro" placeholder="Contraseña">
             </div>
-            <a href="#" id="btnLogin">Ya tienes una cuenta?</a>
+            <a href="#" id="btnLogin">¿Ya tienes una cuenta?</a>
             <div class="float-right">
               <button class="btn btn-primary" type="button" id="registrarse">Registrarse</button>
             </div>
           </div>
+          <!-- NEW!!! -->
           <!-- formulario de solicitud de recuperación (enviar correo) -->
           <div class="col-md-12 d-none" id="frmRecuperarPass">            
             <div class="form-group mb-3">
@@ -201,6 +235,7 @@
               <button class="btn btn-primary" type="button" id="btnRecuperarNew">Restablecer Contraseña</button>
             </div>
           </div>
+
         </div>
       </div>
 
